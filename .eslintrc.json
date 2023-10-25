@@ -1,0 +1,10 @@
+{
+	"root": true,
+	"extends": ["next/core-web-vitals", "prettier"],
+	"parserOptions": {
+		"project": "tsconfig.lint.json"
+	},
+	"rules": {
+		"prefer-const": "error"
+	}
+}
