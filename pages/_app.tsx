@@ -1,0 +1,17 @@
+import '../styles/globals.css'
+import {Roboto} from 'next/font/google'
+import type {AppProps} from 'next/app'
+
+const inter = Roboto({
+	subsets: ['latin'],
+	variable: '--font-roboto',
+	weight: '300',
+})
+
+export default function App({Component, pageProps}: AppProps) {
+	return (
+		<main className={`${inter.variable} font-sans`}>
+			<Component {...pageProps} />
+		</main>
+	)
+}

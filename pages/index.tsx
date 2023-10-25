@@ -1,5 +1,4 @@
 import Head from 'next/head'
-import '../styles/Home.module.css'
 import {App} from './App'
 
 export const Home = () => {
