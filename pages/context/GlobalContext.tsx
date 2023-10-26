@@ -11,6 +11,8 @@ export const GlobalContext = createContext({
 	setSelectedEvent: (e: DayEvent) => {},
 	selectedDay: null,
 	setSelectedDay: (d: Dayjs) => {},
+	isDayEventsModalOpen: false,
+	setIsDayEventsModalOpen: (o: boolean) => {},
 })
 
 const GlobalProvider = ({children}: {children: React.ReactNode}) => {
@@ -18,6 +20,7 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 	const [isEventModalOpen, setIsEventModalOpen] = useState(false)
 	const [selectedEvent, setSelectedEvent] = useState(null)
 	const [selectedDay, setSelectedDay] = useState(null)
+	const [isDayEventsModalOpen, setIsDayEventsModalOpen] = useState(false)
 
 	return (
 		<GlobalContext.Provider
@@ -30,6 +33,8 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 				setSelectedEvent,
 				selectedDay,
 				setSelectedDay,
+				isDayEventsModalOpen,
+				setIsDayEventsModalOpen,
 			}}
 		>
 			{children}

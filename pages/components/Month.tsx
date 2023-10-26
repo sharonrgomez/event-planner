@@ -1,7 +1,8 @@
-import {Fragment} from 'react'
-import {Day} from '.'
+import {Fragment, useContext} from 'react'
+import {Day, DayEventsModal} from '.'
 import {Dayjs} from 'dayjs'
 import {getTotalWeeksInMonth} from '../../utils/constants'
+import {GlobalContext} from '../context'
 
 type MonthProps = {
 	month: Dayjs[][]
@@ -9,6 +10,41 @@ type MonthProps = {
 
 const Month = (props: MonthProps) => {
 	const {month} = props
+
+	const {isDayEventsModalOpen} = useContext(GlobalContext)
+
+	const events = [
+		{
+			title: 'Event one',
+			description: 'Event description',
+			date: '2023-10-26',
+			time: '12:00',
+		},
+		{
+			title: 'Event two',
+			description: 'Event description',
+			date: '2023-10-26',
+			time: '12:00',
+		},
+		{
+			title: 'Event three',
+			description: 'Event description',
+			date: '2023-10-26',
+			time: '12:00',
+		},
+		{
+			title: 'Event four',
+			description: 'Event description',
+			date: '2023-10-26',
+			time: '12:00',
+		},
+		{
+			title: 'Event five',
+			description: 'Event description',
+			date: '2023-10-26',
+			time: '12:00',
+		},
+	]
 
 	return (
 		<div className={`flex-1 grid grid-cols-7 grid-rows-${getTotalWeeksInMonth}`}>
@@ -19,6 +55,7 @@ const Month = (props: MonthProps) => {
 					))}
 				</Fragment>
 			))}
+			{isDayEventsModalOpen && <DayEventsModal events={events} />}
 		</div>
 	)
 }
