@@ -5,7 +5,7 @@ import type {AppProps} from 'next/app'
 const inter = Roboto({
 	subsets: ['latin'],
 	variable: '--font-roboto',
-	weight: '300',
+	weight: ['300', '400', '500', '700'],
 })
 
 export default function App({Component, pageProps}: AppProps) {

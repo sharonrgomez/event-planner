@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import {App} from './App'
+import {MonthProvider} from './context'
 
 export const Home = () => {
 	return (
@@ -10,7 +11,9 @@ export const Home = () => {
 			</Head>
 
 			<main>
-				<App />
+				<MonthProvider>
+					<App />
+				</MonthProvider>
 			</main>
 		</div>
 	)
