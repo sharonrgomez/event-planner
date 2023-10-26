@@ -4,7 +4,8 @@ import React, {useContext} from 'react'
 import {GlobalContext} from '../context'
 
 export const CalendarHeader = () => {
-	const {month, setMonth, setIsEventModalOpen} = useContext(GlobalContext)
+	const {month, setMonth, setIsEventModalOpen, setSelectedDay} =
+		useContext(GlobalContext)
 
 	const handleClickPrev = () => {
 		setMonth(month - 1)
@@ -20,6 +21,7 @@ export const CalendarHeader = () => {
 
 	const handleOpenModal = () => {
 		setIsEventModalOpen(true)
+		setSelectedDay(dayjs())
 	}
 
 	return (

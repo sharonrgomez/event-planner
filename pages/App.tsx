@@ -4,7 +4,7 @@ import {CalendarHeader, EventModal, Month} from './components'
 import {GlobalContext} from './context'
 
 export const App = () => {
-	const {isEventModalOpen, month} = useContext(GlobalContext)
+	const {isEventModalOpen, month, selectedEvent} = useContext(GlobalContext)
 	const [currentMonth, setCurrentMonth] = useState(getMonth())
 
 	useEffect(() => {
@@ -17,7 +17,7 @@ export const App = () => {
 			<div className='flex flex-1'>
 				<Month month={currentMonth} />
 			</div>
-			{isEventModalOpen && <EventModal isCreating={false} />}
+			{isEventModalOpen && <EventModal isCreating={!selectedEvent} />}
 		</div>
 	)
 }

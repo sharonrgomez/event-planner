@@ -1,18 +1,39 @@
-import {useContext} from 'react'
+import {useContext, useState} from 'react'
 import {GlobalContext} from '../context'
+import dayjs from 'dayjs'
 
 type EventModalProps = {
 	isCreating: boolean
 }
 
+export type DayEvent = {
+	title: string
+	description: string
+	date: string
+	time: string
+}
+
 const EventModal = (props: EventModalProps) => {
 	const {isCreating} = props
 
-	const {setIsEventModalOpen} = useContext(GlobalContext)
+	const {setIsEventModalOpen, selectedEvent, setSelectedEvent, selectedDay} =
+		useContext(GlobalContext)
 
 	const handleCloseModal = () => {
 		setIsEventModalOpen(false)
+		setSelectedEvent(null)
 	}
+
+	const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : '')
+	const [description, setDescription] = useState(
+		selectedEvent ? selectedEvent.description : '',
+	)
+	const [date, setDate] = useState(
+		selectedEvent ? selectedEvent.date : selectedDay.format('YYYY-MM-DD'),
+	)
+	const [time, setTime] = useState(
+		selectedEvent ? selectedEvent.time : dayjs().format('HH:mm'),
+	)
 
 	return (
 		<div className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'>
@@ -39,6 +60,8 @@ const EventModal = (props: EventModalProps) => {
 						type='text'
 						className='w-full mb-2 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
 						placeholder='Title'
+						value={title}
+						onChange={(e) => setTitle(e.target.value)}
 					/>
 
 					<div className='flex w-full justify-between items-center mb-2'>
@@ -46,11 +69,15 @@ const EventModal = (props: EventModalProps) => {
 							type='date'
 							className='w-full mr-1 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
 							placeholder='Date'
+							value={date}
+							onChange={(e) => setDate(e.target.value)}
 						/>
 						<input
 							type='time'
 							className='w-full ml-1 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
 							placeholder='Time'
+							value={time}
+							onChange={(e) => setTime(e.target.value)}
 						/>
 					</div>
 
@@ -58,6 +85,8 @@ const EventModal = (props: EventModalProps) => {
 						className='w-full mb-2 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
 						placeholder='Description'
 						rows={4}
+						value={description}
+						onChange={(e) => setDescription(e.target.value)}
 					/>
 				</div>
 
