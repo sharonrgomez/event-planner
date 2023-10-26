@@ -1,10 +1,10 @@
 import dayjs from 'dayjs'
 import React, {useContext} from 'react'
 
-import {MonthContext} from '../context'
+import {GlobalContext} from '../context'
 
 export const CalendarHeader = () => {
-	const {month, setMonth} = useContext(MonthContext)
+	const {month, setMonth, setIsEventModalOpen} = useContext(GlobalContext)
 
 	const handleClickPrev = () => {
 		setMonth(month - 1)
@@ -18,12 +18,29 @@ export const CalendarHeader = () => {
 		setMonth(dayjs().month())
 	}
 
+	const handleOpenModal = () => {
+		setIsEventModalOpen(true)
+	}
+
 	return (
 		<header className='px-4 py-2 flex items-center justify-between'>
 			<h1 className='mr-4 text-xl text-gray-500 fond-bold'>
 				{dayjs(new Date(dayjs().year(), month)).format('MMMM YYYY').toUpperCase()}
 			</h1>
 			<div className='flex'>
+				<button
+					className='rounded-full py-1 px-4 mr-3 bg-green-100 hover:bg-green-200'
+					onClick={handleOpenModal}
+				>
+					<svg
+						xmlns='http://www.w3.org/2000/svg'
+						viewBox='0 0 20 20'
+						fill='currentColor'
+						className='w-5 h-5 text-gray-600 hover:text-gray-800'
+					>
+						<path d='M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z' />
+					</svg>
+				</button>
 				<button
 					className='rounded-full py-1 px-4 mr-3 bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800'
 					onClick={handleClickToday}

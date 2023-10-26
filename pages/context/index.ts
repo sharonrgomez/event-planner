@@ -1,1 +1,1 @@
-export {default as MonthProvider, MonthContext} from './MonthContext'
+export {default as GlobalProvider, GlobalContext} from './GlobalContext'

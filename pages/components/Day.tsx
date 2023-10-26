@@ -1,6 +1,6 @@
 import dayjs, {Dayjs} from 'dayjs'
 import {useContext} from 'react'
-import {MonthContext} from '../context'
+import {GlobalContext} from '../context'
 
 type DayProps = {
 	day: Dayjs
@@ -10,16 +10,22 @@ type DayProps = {
 const Day = (props: DayProps) => {
 	const {day, rowIdx} = props
 
-	const {month} = useContext(MonthContext)
+	const {month, setIsEventModalOpen} = useContext(GlobalContext)
 
 	const dayMonth = dayjs().month(day.month()).format('MMMM')
 	const currentMonth = dayjs().month(month).format('MMMM')
 	const isDayInCurrentMonth = dayMonth === currentMonth
 
+	const events = [{title: 'Event title', description: 'Event description'}]
+
 	const getCurrentDayStyles = () => {
 		return day.format('DD-MM-YY') === dayjs().format('DD-MM-YY')
 			? 'bg-blue-400 text-white rounded-full w-7'
 			: `${isDayInCurrentMonth ? 'text-gray-700' : 'text-gray-400'}`
+	}
+
+	const handleClickDay = () => {
+		setIsEventModalOpen(true)
 	}
 
 	return (
@@ -35,6 +41,20 @@ const Day = (props: DayProps) => {
 				<p className={`text-sm p-1 my-1 text-center ${getCurrentDayStyles()}`}>
 					{day.format('DD')}
 				</p>
+			</div>
+
+			<div className='flex-1 cursor-pointer' onClick={handleClickDay}>
+				{events.map((event, idx) => (
+					<div
+						key={idx}
+						onClick={() => {}}
+						className='bg-yellow-200 hover:bg-yellow-300 p-1 mx-2 rounded mb-1'
+					>
+						<p className='text-sm text-center text-gray-600 truncate'>
+							{event.title}
+						</p>
+					</div>
+				))}
 			</div>
 		</div>
 	)

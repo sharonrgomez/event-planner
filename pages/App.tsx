@@ -1,12 +1,11 @@
 import {useContext, useEffect, useState} from 'react'
 import {getMonth} from '../utils/constants'
 import {CalendarHeader, EventModal, Month} from './components'
-import {MonthContext} from './context'
+import {GlobalContext} from './context'
 
 export const App = () => {
-	const [isModalOpen] = useState(true)
+	const {isEventModalOpen, month} = useContext(GlobalContext)
 	const [currentMonth, setCurrentMonth] = useState(getMonth())
-	const {month} = useContext(MonthContext)
 
 	useEffect(() => {
 		setCurrentMonth(getMonth(month))
@@ -18,7 +17,7 @@ export const App = () => {
 			<div className='flex flex-1'>
 				<Month month={currentMonth} />
 			</div>
-			{false && <EventModal isCreating={false} />}
+			{isEventModalOpen && <EventModal isCreating={false} />}
 		</div>
 	)
 }

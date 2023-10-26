@@ -1,9 +1,18 @@
+import {useContext} from 'react'
+import {GlobalContext} from '../context'
+
 type EventModalProps = {
 	isCreating: boolean
 }
 
 const EventModal = (props: EventModalProps) => {
 	const {isCreating} = props
+
+	const {setIsEventModalOpen} = useContext(GlobalContext)
+
+	const handleCloseModal = () => {
+		setIsEventModalOpen(false)
+	}
 
 	return (
 		<div className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'>
@@ -13,7 +22,7 @@ const EventModal = (props: EventModalProps) => {
 						{isCreating ? 'Add ' : 'Edit '} event
 					</div>
 
-					<button onClick={() => {}}>
+					<button onClick={handleCloseModal}>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
 							viewBox='0 0 20 20'
