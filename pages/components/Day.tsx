@@ -1,4 +1,6 @@
 import dayjs, {Dayjs} from 'dayjs'
+import {useContext} from 'react'
+import {MonthContext} from '../context'
 
 type DayProps = {
 	day: Dayjs
@@ -8,10 +10,16 @@ type DayProps = {
 const Day = (props: DayProps) => {
 	const {day, rowIdx} = props
 
+	const {month} = useContext(MonthContext)
+
+	const dayMonth = dayjs().month(day.month()).format('MMMM')
+	const currentMonth = dayjs().month(month).format('MMMM')
+	const isDayInCurrentMonth = dayMonth === currentMonth
+
 	const getCurrentDayStyles = () => {
 		return day.format('DD-MM-YY') === dayjs().format('DD-MM-YY')
 			? 'bg-blue-400 text-white rounded-full w-7'
-			: 'text-gray-800'
+			: `${isDayInCurrentMonth ? 'text-gray-700' : 'text-gray-400'}`
 	}
 
 	return (

@@ -1,6 +1,6 @@
 import {useContext, useEffect, useState} from 'react'
 import {getMonth} from '../utils/constants'
-import {CalendarHeader, EventModal, Month, Sidebar} from './components'
+import {CalendarHeader, EventModal, Month} from './components'
 import {MonthContext} from './context'
 
 export const App = () => {
@@ -16,7 +16,6 @@ export const App = () => {
 		<div className='h-screen flex flex-col'>
 			<CalendarHeader />
 			<div className='flex flex-1'>
-				<Sidebar />
 				<Month month={currentMonth} />
 			</div>
 			{false && <EventModal isCreating={false} />}

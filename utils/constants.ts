@@ -4,10 +4,12 @@ export const getTotalWeeksInMonth = (year: number, month: number) => {
 	const totalDaysInMonth = dayjs(new Date(year, month + 1, 0)).daysInMonth()
 	const firstWeekdayOfMonth = dayjs(new Date(year, month, 1)).day()
 
-	// display 6 rows if total days in month + index of first weekday of month > 35
 	let totalWeeks = 5
 	if (firstWeekdayOfMonth + totalDaysInMonth > 35) {
 		totalWeeks = 6
+	}
+	if (firstWeekdayOfMonth + totalDaysInMonth < 29) {
+		totalWeeks = 4
 	}
 
 	return totalWeeks
