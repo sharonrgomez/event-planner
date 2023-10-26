@@ -19,7 +19,7 @@ export const App = () => {
 				<Sidebar />
 				<Month month={currentMonth} />
 			</div>
-			{isModalOpen && <EventModal isCreating={false} />}
+			{false && <EventModal isCreating={false} />}
 		</div>
 	)
 }
