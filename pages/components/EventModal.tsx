@@ -1,15 +1,16 @@
-import {useContext, useEffect, useState} from 'react'
+import {useContext, useEffect, useMemo, useState} from 'react'
 import {GlobalContext} from '../context'
 import dayjs from 'dayjs'
 
-export type DayEvent = {
+export type EventType = {
+	id: string
 	title: string
 	description: string
 	date: string
 	time: string
-	color: {
-		class: string
-		hoverClass: string
+	label: {
+		color: string
+		hoverColor: string
 	}
 }
 
@@ -40,7 +41,7 @@ const EventModal = () => {
 
 	const [colorBubble, setColorBubble] = useState(undefined)
 	const [eventColor, setEventColor] = useState(
-		selectedEvent ? selectedEvent.color : '',
+		selectedEvent ? selectedEvent.label : '',
 	)
 
 	const handleSubmit = () => {
@@ -49,9 +50,9 @@ const EventModal = () => {
 			description,
 			date,
 			time,
-			color: eventColor || {
-				class: colorOptions[2].bgColor,
-				hoverClass: colorOptions[2].hoverBgColor,
+			label: eventColor || {
+				color: colorOptions[2].bgColor,
+				hoverColor: colorOptions[2].hoverBgColor,
 			},
 			id: selectedEvent ? selectedEvent.id : Date.now(),
 		}
@@ -72,60 +73,63 @@ const EventModal = () => {
 		setSelectedEvent(null)
 	}
 
-	const colorOptions = [
-		{
-			class: 'fill-red-400',
-			active: 'fill-red-500',
-			selected: colorBubble === 'red',
-			col: 'red',
-			bgColor: 'bg-red-400',
-			hoverBgColor: 'bg-red-500',
-		},
-		{
-			class: 'fill-orange-400',
-			active: 'fill-orange-500',
-			selected: colorBubble === 'orange',
-			col: 'orange',
-			bgColor: 'bg-orange-400',
-			hoverBgColor: 'bg-orange-500',
-		},
-		{
-			class: 'fill-yellow-300',
-			active: 'fill-yellow-500',
-			selected: colorBubble === 'yellow',
-			col: 'yellow',
-			bgColor: 'bg-yellow-300',
-			hoverBgColor: 'bg-yellow-500',
-		},
-		{
-			class: 'fill-green-400',
-			active: 'fill-green-500',
-			selected: colorBubble === 'green',
-			col: 'green',
-			bgColor: 'bg-green-400',
-			hoverBgColor: 'bg-green-500',
-		},
-		{
-			class: 'fill-blue-400',
-			active: 'fill-blue-500',
-			selected: colorBubble === 'blue',
-			col: 'blue',
-			bgColor: 'bg-blue-400',
-			hoverBgColor: 'bg-blue-500',
-		},
-		{
-			class: 'fill-indigo-400',
-			active: 'fill-indigo-500',
-			selected: colorBubble === 'indigo',
-			col: 'indigo',
-			bgColor: 'bg-indigo-400',
-			hoverBgColor: 'bg-indigo-500',
-		},
-	]
+	const colorOptions = useMemo(
+		() => [
+			{
+				class: 'fill-red-400',
+				active: 'fill-red-500',
+				selected: colorBubble === 'red',
+				col: 'red',
+				bgColor: 'bg-red-400',
+				hoverBgColor: 'bg-red-500',
+			},
+			{
+				class: 'fill-orange-400',
+				active: 'fill-orange-500',
+				selected: colorBubble === 'orange',
+				col: 'orange',
+				bgColor: 'bg-orange-400',
+				hoverBgColor: 'bg-orange-500',
+			},
+			{
+				class: 'fill-yellow-300',
+				active: 'fill-yellow-500',
+				selected: colorBubble === 'yellow',
+				col: 'yellow',
+				bgColor: 'bg-yellow-300',
+				hoverBgColor: 'bg-yellow-500',
+			},
+			{
+				class: 'fill-green-400',
+				active: 'fill-green-500',
+				selected: colorBubble === 'green',
+				col: 'green',
+				bgColor: 'bg-green-400',
+				hoverBgColor: 'bg-green-500',
+			},
+			{
+				class: 'fill-blue-400',
+				active: 'fill-blue-500',
+				selected: colorBubble === 'blue',
+				col: 'blue',
+				bgColor: 'bg-blue-400',
+				hoverBgColor: 'bg-blue-500',
+			},
+			{
+				class: 'fill-indigo-400',
+				active: 'fill-indigo-500',
+				selected: colorBubble === 'indigo',
+				col: 'indigo',
+				bgColor: 'bg-indigo-400',
+				hoverBgColor: 'bg-indigo-500',
+			},
+		],
+		[colorBubble],
+	)
 
 	useEffect(() => {
 		colorOptions.map((col) => {
-			if (selectedEvent && selectedEvent.color.class.includes(col.col)) {
+			if (selectedEvent && selectedEvent.label.color.includes(col.col)) {
 				setColorBubble(col.col)
 			}
 		})
@@ -217,7 +221,7 @@ const EventModal = () => {
 							key={idx}
 							onClick={() => {
 								setColorBubble(col.col)
-								setEventColor({class: col.bgColor, hoverClass: col.hoverBgColor})
+								setEventColor({color: col.bgColor, hoverColor: col.hoverBgColor})
 							}}
 						>
 							<svg

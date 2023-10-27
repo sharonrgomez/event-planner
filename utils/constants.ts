@@ -1,6 +1,6 @@
 import dayjs from 'dayjs'
 
-export const getTotalWeeksInMonth = (year: number, month: number) => {
+export const getTotalWeeksInMonth = (year: number, month: number): number => {
 	const totalDaysInMonth = dayjs(new Date(year, month + 1, 0)).daysInMonth()
 	const firstWeekdayOfMonth = dayjs(new Date(year, month, 1)).day()
 
@@ -15,7 +15,7 @@ export const getTotalWeeksInMonth = (year: number, month: number) => {
 	return totalWeeks
 }
 
-export const getMonth = (month = dayjs().month()) => {
+export const getMonth = (month = dayjs().month()): dayjs.Dayjs[][] => {
 	month = Math.floor(month)
 	const year = dayjs().year()
 	const firstWeekdayOfMonth = dayjs(new Date(year, month, 1)).day()

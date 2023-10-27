@@ -1,9 +1,10 @@
 import {Fragment, useContext} from 'react'
 import {GlobalContext} from '../context'
-import DayEvent from './DayEvent'
+import {EventType} from './EventModal'
+import {EventLabel} from '.'
 
 type DayEventsModalProps = {
-	events: DayEvent[]
+	events: EventType[]
 }
 
 const DayEventsModal = (props: DayEventsModalProps) => {
@@ -20,7 +21,7 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 		setIsDayEventsModalOpen(false)
 	}
 
-	const handleClickEvent = (event: DayEvent) => {
+	const handleClickEvent = (event: EventType) => {
 		setSelectedEvent(event)
 		setIsEventModalOpen(true)
 	}
@@ -47,14 +48,11 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 				<div className='flex flex-col items-center justify-center p-5'>
 					{events.map((event, idx) => (
 						<Fragment key={idx}>
-							<div
-								className={`text-sm text-center text-gray-600 truncate cursor-pointer flex items-center ${event.color.class} hover:${event.color.hoverClass} px-2 py-1 mx-2 my-1 rounded w-full`}
-								onClick={() => handleClickEvent(event)}
-							>
-								<p>
-									{event.time} <span className='font-medium'>{event.title}</span>
-								</p>
-							</div>
+							<EventLabel
+								event={event}
+								clickEventHandler={handleClickEvent}
+								isFullWidth
+							/>
 						</Fragment>
 					))}
 				</div>

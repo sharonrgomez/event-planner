@@ -1,7 +1,8 @@
 import dayjs, {Dayjs} from 'dayjs'
 import {Fragment, useContext, useEffect, useState} from 'react'
 import {GlobalContext} from '../context'
-import DayEvent from './DayEvent'
+import EventLabel from './EventLabel'
+import {EventType} from './EventModal'
 
 type DayProps = {
 	day: Dayjs
@@ -44,7 +45,7 @@ const Day = (props: DayProps) => {
 		setSelectedDay(day)
 	}
 
-	const handleClickEvent = (event: DayEvent) => {
+	const handleClickEvent = (event: EventType) => {
 		setSelectedEvent(event)
 	}
 
@@ -73,7 +74,7 @@ const Day = (props: DayProps) => {
 				<div className='flex-1 cursor-pointer' onClick={() => handleClickDay(day)}>
 					{dayEvents.slice(0, 2).map((event, idx) => (
 						<Fragment key={idx}>
-							<DayEvent event={event} clickEventHandler={handleClickEvent} />
+							<EventLabel event={event} clickEventHandler={handleClickEvent} />
 						</Fragment>
 					))}
 					{dayEvents.length > 2 && (

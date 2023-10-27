@@ -1,6 +1,13 @@
 import dayjs, {Dayjs} from 'dayjs'
-import {createContext, useEffect, useReducer, useState} from 'react'
-import {DayEvent} from '../components/EventModal'
+import {
+	createContext,
+	Dispatch,
+	SetStateAction,
+	useEffect,
+	useReducer,
+	useState,
+} from 'react'
+import {EventType} from '../components/EventModal'
 
 const isServerSide = typeof window === 'undefined'
 
@@ -23,13 +30,26 @@ const initEvents = () => {
 	return parsedEvents
 }
 
-export const GlobalContext = createContext({
+export const GlobalContext = createContext<{
+	month: number
+	setMonth: Dispatch<SetStateAction<number>>
+	isEventModalOpen: boolean
+	setIsEventModalOpen: Dispatch<SetStateAction<boolean>>
+	selectedEvent: EventType
+	setSelectedEvent: Dispatch<SetStateAction<EventType>>
+	selectedDay: Dayjs
+	setSelectedDay: Dispatch<SetStateAction<Dayjs>>
+	isDayEventsModalOpen: boolean
+	setIsDayEventsModalOpen: Dispatch<SetStateAction<boolean>>
+	savedEvents: EventType[]
+	dispatchSaveEvent: ({type, payload}) => void
+}>({
 	month: dayjs().month(),
 	setMonth: (m: number) => {},
 	isEventModalOpen: false,
 	setIsEventModalOpen: (o: boolean) => {},
 	selectedEvent: null,
-	setSelectedEvent: (e: DayEvent) => {},
+	setSelectedEvent: (e: EventType) => {},
 	selectedDay: null,
 	setSelectedDay: (d: Dayjs) => {},
 	isDayEventsModalOpen: false,
