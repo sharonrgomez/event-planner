@@ -1,4 +1,4 @@
-import {useContext, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import {GlobalContext} from '../context'
 import dayjs from 'dayjs'
 
@@ -7,6 +7,10 @@ export type DayEvent = {
 	description: string
 	date: string
 	time: string
+	color: {
+		class: string
+		hoverClass: string
+	}
 }
 
 const EventModal = () => {
@@ -34,12 +38,21 @@ const EventModal = () => {
 		selectedEvent ? selectedEvent.time : dayjs().format('HH:mm'),
 	)
 
+	const [colorBubble, setColorBubble] = useState(undefined)
+	const [eventColor, setEventColor] = useState(
+		selectedEvent ? selectedEvent.color : '',
+	)
+
 	const handleSubmit = () => {
 		const payload = {
 			title,
 			description,
 			date,
 			time,
+			color: eventColor || {
+				class: colorOptions[2].bgColor,
+				hoverClass: colorOptions[2].hoverBgColor,
+			},
 			id: selectedEvent ? selectedEvent.id : Date.now(),
 		}
 
@@ -59,6 +72,65 @@ const EventModal = () => {
 		setSelectedEvent(null)
 	}
 
+	const colorOptions = [
+		{
+			class: 'fill-red-400',
+			active: 'fill-red-500',
+			selected: colorBubble === 'red',
+			col: 'red',
+			bgColor: 'bg-red-400',
+			hoverBgColor: 'bg-red-500',
+		},
+		{
+			class: 'fill-orange-400',
+			active: 'fill-orange-500',
+			selected: colorBubble === 'orange',
+			col: 'orange',
+			bgColor: 'bg-orange-400',
+			hoverBgColor: 'bg-orange-500',
+		},
+		{
+			class: 'fill-yellow-300',
+			active: 'fill-yellow-500',
+			selected: colorBubble === 'yellow',
+			col: 'yellow',
+			bgColor: 'bg-yellow-300',
+			hoverBgColor: 'bg-yellow-500',
+		},
+		{
+			class: 'fill-green-400',
+			active: 'fill-green-500',
+			selected: colorBubble === 'green',
+			col: 'green',
+			bgColor: 'bg-green-400',
+			hoverBgColor: 'bg-green-500',
+		},
+		{
+			class: 'fill-blue-400',
+			active: 'fill-blue-500',
+			selected: colorBubble === 'blue',
+			col: 'blue',
+			bgColor: 'bg-blue-400',
+			hoverBgColor: 'bg-blue-500',
+		},
+		{
+			class: 'fill-indigo-400',
+			active: 'fill-indigo-500',
+			selected: colorBubble === 'indigo',
+			col: 'indigo',
+			bgColor: 'bg-indigo-400',
+			hoverBgColor: 'bg-indigo-500',
+		},
+	]
+
+	useEffect(() => {
+		colorOptions.map((col) => {
+			if (selectedEvent && selectedEvent.color.class.includes(col.col)) {
+				setColorBubble(col.col)
+			}
+		})
+	}, [selectedEvent])
+
 	return (
 		<div className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'>
 			<form className='bg-white rounded-lg shadow-2xl xl:w-1/4'>
@@ -74,13 +146,13 @@ const EventModal = () => {
 									xmlns='http://www.w3.org/2000/svg'
 									fill='none'
 									viewBox='0 0 24 24'
-									stroke-width='1.5'
+									strokeWidth='1.5'
 									stroke='currentColor'
 									className='w-5 h-5 text-red-500 hover:text-red-700'
 								>
 									<path
-										stroke-linecap='round'
-										stroke-linejoin='round'
+										strokeLinecap='round'
+										strokeLinejoin='round'
 										d='M14.74 9l-.346 9m-4.788 0L9.26 9m9.968-3.21c.342.052.682.107 1.022.166m-1.022-.165L18.16 19.673a2.25 2.25 0 01-2.244 2.077H8.084a2.25 2.25 0 01-2.244-2.077L4.772 5.79m14.456 0a48.108 48.108 0 00-3.478-.397m-12 .562c.34-.059.68-.114 1.022-.165m0 0a48.11 48.11 0 013.478-.397m7.5 0v-.916c0-1.18-.91-2.164-2.09-2.201a51.964 51.964 0 00-3.32 0c-1.18.037-2.09 1.022-2.09 2.201v.916m7.5 0a48.667 48.667 0 00-7.5 0'
 									/>
 								</svg>
@@ -94,16 +166,16 @@ const EventModal = () => {
 								className='w-5 h-5 text-red-500 hover:text-red-700'
 							>
 								<path
-									fill-rule='evenodd'
+									fillRule='evenodd'
 									d='M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z'
-									clip-rule='evenodd'
+									clipRule='evenodd'
 								/>
 							</svg>
 						</button>
 					</div>
 				</div>
 
-				<div className='flex flex-col items-center justify-center p-5'>
+				<div className='flex flex-col items-center justify-center p-5 pb-1'>
 					<input
 						type='text'
 						className='w-full mb-2 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
@@ -136,6 +208,29 @@ const EventModal = () => {
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
 					/>
+				</div>
+
+				<div className='flex flex-row items-center justify-center pb-5'>
+					{colorOptions.map((col, idx) => (
+						<div
+							className='p-1 focus:ring-2'
+							key={idx}
+							onClick={() => {
+								setColorBubble(col.col)
+								setEventColor({class: col.bgColor, hoverClass: col.hoverBgColor})
+							}}
+						>
+							<svg
+								className={`w-4 h-4 cursor-pointer ${
+									col.selected ? col.active : col.class
+								} hover:${col.active}`}
+								viewBox='0 0 100 100'
+								xmlns='http://www.w3.org/2000/svg'
+							>
+								<circle cx='50' cy='50' r='50' />
+							</svg>
+						</div>
+					))}
 				</div>
 
 				<div className='flex justify-end items-center w-full bg-gray-50 px-5 py-4'>

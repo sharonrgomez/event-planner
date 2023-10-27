@@ -1,4 +1,3 @@
-import dayjs, {Dayjs} from 'dayjs'
 import {Fragment, useContext} from 'react'
 import {GlobalContext} from '../context'
 import DayEvent from './DayEvent'
@@ -45,11 +44,11 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 						</svg>
 					</button>
 				</div>
-				<div className='flex flex-col items-start justify-center p-5'>
+				<div className='flex flex-col items-center justify-center p-5'>
 					{events.map((event, idx) => (
 						<Fragment key={idx}>
 							<div
-								className='text-sm text-center text-gray-600 truncate cursor-pointer flex items-center bg-yellow-200 hover:bg-yellow-300 px-2 py-1 mx-2 my-1 rounded w-full'
+								className={`text-sm text-center text-gray-600 truncate cursor-pointer flex items-center ${event.color.class} hover:${event.color.hoverClass} px-2 py-1 mx-2 my-1 rounded w-full`}
 								onClick={() => handleClickEvent(event)}
 							>
 								<p>

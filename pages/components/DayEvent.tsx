@@ -14,7 +14,7 @@ const DayEvent = (props: DayEventProps) => {
 	return (
 		<div
 			onClick={() => clickEventHandler(event)}
-			className='bg-yellow-200 hover:bg-yellow-300 p-1 mx-2 rounded mb-1'
+			className={`${event.color.class} hover:${event.color.hoverClass} p-1 mx-2 rounded mb-1`}
 		>
 			<p className='text-sm text-gray-600 truncate'>
 				{event.time} <span className='font-medium'>{event.title}</span>
