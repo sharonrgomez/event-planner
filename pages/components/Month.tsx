@@ -11,7 +11,8 @@ type MonthProps = {
 const Month = (props: MonthProps) => {
 	const {month} = props
 
-	const {isDayEventsModalOpen, savedEvents} = useContext(GlobalContext)
+	const {isDayEventsModalOpen, savedEvents, selectedDay} =
+		useContext(GlobalContext)
 
 	return (
 		<div className={`flex-1 grid grid-cols-7 grid-rows-${getTotalWeeksInMonth}`}>
@@ -23,7 +24,13 @@ const Month = (props: MonthProps) => {
 				</Fragment>
 			))}
 
-			{isDayEventsModalOpen && <DayEventsModal events={savedEvents} />}
+			{isDayEventsModalOpen && (
+				<DayEventsModal
+					events={savedEvents.filter((event) =>
+						selectedDay.isSame(event.date, 'day'),
+					)}
+				/>
+			)}
 		</div>
 	)
 }
