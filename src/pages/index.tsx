@@ -1,12 +1,12 @@
 import Head from 'next/head'
-import {App} from './App'
-import {GlobalProvider} from './context'
+import App from '../App'
+import {GlobalProvider} from '../context'
 
 export const Home = () => {
 	return (
 		<div>
 			<Head>
-				<title>Create Next App</title>
+				<title>Event planner</title>
 				<link rel='icon' href='/favicon.ico' />
 			</Head>
 

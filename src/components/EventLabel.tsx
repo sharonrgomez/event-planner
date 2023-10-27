@@ -15,7 +15,7 @@ const EventLabel = (props: EventLabelProps) => {
 	return (
 		<div
 			onClick={() => clickEventHandler(event)}
-			className={`${event.label.color} hover:${
+			className={`${event.label.color} ${
 				event.label.hoverColor
 			} px-1 mx-1 rounded mb-1 cursor-pointer items-center ${
 				isFullWidth ? 'w-full' : ''

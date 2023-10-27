@@ -1,9 +1,9 @@
 import {useContext, useEffect, useState} from 'react'
-import {getMonth} from '../utils/constants'
+import {getMonth} from './utils/constants'
 import {CalendarHeader, EventModal, Month} from './components'
 import {GlobalContext} from './context'
 
-export const App = () => {
+const App = () => {
 	const {isEventModalOpen, month} = useContext(GlobalContext)
 	const [currentMonth, setCurrentMonth] = useState(getMonth())
 
@@ -23,3 +23,5 @@ export const App = () => {
 		</div>
 	)
 }
+
+export default App

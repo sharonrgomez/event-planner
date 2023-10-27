@@ -81,7 +81,7 @@ const EventModal = () => {
 				selected: colorBubble === 'red',
 				col: 'red',
 				bgColor: 'bg-red-400',
-				hoverBgColor: 'bg-red-500',
+				hoverBgColor: 'hover:bg-red-500',
 			},
 			{
 				class: 'fill-orange-400',
@@ -89,7 +89,7 @@ const EventModal = () => {
 				selected: colorBubble === 'orange',
 				col: 'orange',
 				bgColor: 'bg-orange-400',
-				hoverBgColor: 'bg-orange-500',
+				hoverBgColor: 'hover:bg-orange-500',
 			},
 			{
 				class: 'fill-yellow-300',
@@ -97,7 +97,7 @@ const EventModal = () => {
 				selected: colorBubble === 'yellow',
 				col: 'yellow',
 				bgColor: 'bg-yellow-300',
-				hoverBgColor: 'bg-yellow-500',
+				hoverBgColor: 'hover:bg-yellow-500',
 			},
 			{
 				class: 'fill-green-400',
@@ -105,7 +105,7 @@ const EventModal = () => {
 				selected: colorBubble === 'green',
 				col: 'green',
 				bgColor: 'bg-green-400',
-				hoverBgColor: 'bg-green-500',
+				hoverBgColor: 'hover:bg-green-500',
 			},
 			{
 				class: 'fill-blue-400',
@@ -113,7 +113,7 @@ const EventModal = () => {
 				selected: colorBubble === 'blue',
 				col: 'blue',
 				bgColor: 'bg-blue-400',
-				hoverBgColor: 'bg-blue-500',
+				hoverBgColor: 'hover:bg-blue-500',
 			},
 			{
 				class: 'fill-indigo-400',
@@ -121,7 +121,7 @@ const EventModal = () => {
 				selected: colorBubble === 'indigo',
 				col: 'indigo',
 				bgColor: 'bg-indigo-400',
-				hoverBgColor: 'bg-indigo-500',
+				hoverBgColor: 'hover:bg-indigo-500',
 			},
 		],
 		[colorBubble],
