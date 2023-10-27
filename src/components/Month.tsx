@@ -1,7 +1,7 @@
 import {Fragment, useContext} from 'react'
 import {Day, DayEventsModal} from '.'
 import {Dayjs} from 'dayjs'
-import {getTotalWeeksInMonth} from '../utils/constants'
+import {getTotalWeeksInMonth} from '../utils/helpers'
 import {GlobalContext} from '../context'
 
 type MonthProps = {

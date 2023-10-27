@@ -1,5 +1,5 @@
 import {useContext, useEffect, useState} from 'react'
-import {getMonth} from './utils/constants'
+import {getMonth} from './utils/helpers'
 import {CalendarHeader, EventModal, Month} from './components'
 import {GlobalContext} from './context'
 

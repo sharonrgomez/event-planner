@@ -1,6 +1,7 @@
-import {useContext, useEffect, useMemo, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import {GlobalContext} from '../context'
 import dayjs from 'dayjs'
+import {getColorOptions} from '../utils/helpers'
 
 export type EventType = {
 	id: string
@@ -72,60 +73,7 @@ const EventModal = () => {
 		setIsEventModalOpen(false)
 		setSelectedEvent(null)
 	}
-
-	const colorOptions = useMemo(
-		() => [
-			{
-				class: 'fill-red-400',
-				active: 'fill-red-500',
-				selected: colorBubble === 'red',
-				col: 'red',
-				bgColor: 'bg-red-400',
-				hoverBgColor: 'hover:bg-red-500',
-			},
-			{
-				class: 'fill-orange-400',
-				active: 'fill-orange-500',
-				selected: colorBubble === 'orange',
-				col: 'orange',
-				bgColor: 'bg-orange-400',
-				hoverBgColor: 'hover:bg-orange-500',
-			},
-			{
-				class: 'fill-yellow-300',
-				active: 'fill-yellow-500',
-				selected: colorBubble === 'yellow',
-				col: 'yellow',
-				bgColor: 'bg-yellow-300',
-				hoverBgColor: 'hover:bg-yellow-500',
-			},
-			{
-				class: 'fill-green-400',
-				active: 'fill-green-500',
-				selected: colorBubble === 'green',
-				col: 'green',
-				bgColor: 'bg-green-400',
-				hoverBgColor: 'hover:bg-green-500',
-			},
-			{
-				class: 'fill-blue-400',
-				active: 'fill-blue-500',
-				selected: colorBubble === 'blue',
-				col: 'blue',
-				bgColor: 'bg-blue-400',
-				hoverBgColor: 'hover:bg-blue-500',
-			},
-			{
-				class: 'fill-indigo-400',
-				active: 'fill-indigo-500',
-				selected: colorBubble === 'indigo',
-				col: 'indigo',
-				bgColor: 'bg-indigo-400',
-				hoverBgColor: 'hover:bg-indigo-500',
-			},
-		],
-		[colorBubble],
-	)
+	const colorOptions = getColorOptions(colorBubble)
 
 	useEffect(() => {
 		colorOptions.map((col) => {
