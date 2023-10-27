@@ -11,40 +11,7 @@ type MonthProps = {
 const Month = (props: MonthProps) => {
 	const {month} = props
 
-	const {isDayEventsModalOpen} = useContext(GlobalContext)
-
-	const events = [
-		{
-			title: 'Event one',
-			description: 'Event description',
-			date: '2023-10-26',
-			time: '12:00',
-		},
-		{
-			title: 'Event two',
-			description: 'Event description',
-			date: '2023-10-26',
-			time: '12:00',
-		},
-		{
-			title: 'Event three',
-			description: 'Event description',
-			date: '2023-10-26',
-			time: '12:00',
-		},
-		{
-			title: 'Event four',
-			description: 'Event description',
-			date: '2023-10-26',
-			time: '12:00',
-		},
-		{
-			title: 'Event five',
-			description: 'Event description',
-			date: '2023-10-26',
-			time: '12:00',
-		},
-	]
+	const {isDayEventsModalOpen, savedEvents} = useContext(GlobalContext)
 
 	return (
 		<div className={`flex-1 grid grid-cols-7 grid-rows-${getTotalWeeksInMonth}`}>
@@ -55,7 +22,8 @@ const Month = (props: MonthProps) => {
 					))}
 				</Fragment>
 			))}
-			{isDayEventsModalOpen && <DayEventsModal events={events} />}
+
+			{isDayEventsModalOpen && <DayEventsModal events={savedEvents} />}
 		</div>
 	)
 }

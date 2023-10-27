@@ -16,8 +16,13 @@ export type DayEvent = {
 const EventModal = (props: EventModalProps) => {
 	const {isCreating} = props
 
-	const {setIsEventModalOpen, selectedEvent, setSelectedEvent, selectedDay} =
-		useContext(GlobalContext)
+	const {
+		setIsEventModalOpen,
+		selectedEvent,
+		setSelectedEvent,
+		selectedDay,
+		dispatchSaveEvent,
+	} = useContext(GlobalContext)
 
 	const handleCloseModal = () => {
 		setIsEventModalOpen(false)
@@ -34,6 +39,25 @@ const EventModal = (props: EventModalProps) => {
 	const [time, setTime] = useState(
 		selectedEvent ? selectedEvent.time : dayjs().format('HH:mm'),
 	)
+
+	const handleSubmit = () => {
+		const payload = {
+			title,
+			description,
+			date,
+			time,
+			id: selectedEvent ? selectedEvent.id : Date.now(),
+		}
+
+		if (selectedEvent) {
+			dispatchSaveEvent({type: 'update', payload})
+		} else {
+			dispatchSaveEvent({type: 'push', payload})
+		}
+
+		setIsEventModalOpen(false)
+		setSelectedEvent(null)
+	}
 
 	return (
 		<div className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'>
@@ -91,7 +115,10 @@ const EventModal = (props: EventModalProps) => {
 				</div>
 
 				<div className='flex justify-end items-center w-full bg-gray-50 px-5 py-4'>
-					<button className='bg-blue-400 hover:bg-blue-500 px-4 py-2 rounded text-white'>
+					<button
+						className='bg-blue-400 hover:bg-blue-500 px-4 py-2 rounded text-white'
+						onClick={handleSubmit}
+					>
 						Save
 					</button>
 				</div>
