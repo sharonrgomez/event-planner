@@ -1,3 +1,4 @@
+import {Button} from '.'
 import {GlobalContext} from '../context'
 import {useContext} from 'react'
 
@@ -26,22 +27,16 @@ const DeleteConfirmationModal = () => {
 		<div className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'>
 			<div className='bg-white rounded-lg shadow-2xl max-sm:w-full sm:max-md:w-1/2 sm:max-2xl:w-1/3'>
 				<div className='p-4'>
-					<p className='text-md font-medium mb-6 text-gray-800'>
+					<p className='text-md font-medium mb-6 text-gray-600'>
 						Are you sure you want to delete this event?
 					</p>
 					<div className='flex justify-end'>
-						<button
-							className='bg-gray-400 hover:bg-gray-500 px-2 py-1 mr-2 rounded text-white'
-							onClick={handleCloseModal}
-						>
+						<Button compact onClick={handleCloseModal} extraClasses='mr-2'>
 							Cancel
-						</button>
-						<button
-							className='bg-red-400 hover:bg-red-500 px-2 py-1 rounded text-white'
-							onClick={handleClickDelete}
-						>
+						</Button>
+						<Button compact onClick={handleClickDelete} variant='danger'>
 							Delete
-						</button>
+						</Button>
 					</div>
 				</div>
 			</div>

@@ -2,6 +2,7 @@ import {useContext, useEffect, useState} from 'react'
 import {GlobalContext} from '../context'
 import dayjs from 'dayjs'
 import {getColorOptions} from '../utils/helpers'
+import {Button} from '.'
 
 export type EventType = {
 	id: string
@@ -90,7 +91,7 @@ const EventModal = () => {
 		<div className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'>
 			<form className='bg-white rounded-lg shadow-2xl max-sm:mx-5 max-sm:w-full sm:max-md:w-1/2 sm:max-2xl:w-1/3'>
 				<div className='flex justify-between items-center border-b border-gray-100 px-5 py-4'>
-					<div className='text-gray-500 font-medium text-xl'>
+					<div className='text-gray-600 font-medium text-xl'>
 						{selectedEvent ? 'Edit ' : 'Add '} event
 					</div>
 
@@ -187,18 +188,12 @@ const EventModal = () => {
 				</div>
 
 				<div className='flex justify-end items-center w-full bg-gray-50 px-5 py-4'>
-					<button
-						className='bg-gray-400 hover:bg-gray-500 px-4 py-2 mr-2 rounded text-white'
-						onClick={handleCloseModal}
-					>
+					<Button extraClasses='mr-2' onClick={handleCloseModal}>
 						Close
-					</button>
-					<button
-						className='bg-blue-400 hover:bg-blue-500 px-4 py-2 rounded text-white'
-						onClick={handleSubmit}
-					>
+					</Button>
+					<Button onClick={handleSubmit} variant='primary'>
 						Save
-					</button>
+					</Button>
 				</div>
 			</form>
 		</div>
