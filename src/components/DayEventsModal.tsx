@@ -28,7 +28,7 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 
 	return (
 		<div className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'>
-			<div className='bg-white rounded-lg shadow-2xl xl:w-1/6'>
+			<div className='bg-white rounded-lg shadow-2xl max-sm:w-1/2 sm:max-md:w-1/4 sm:max-2xl:w-1/6'>
 				<div className='flex justify-between items-center border-b border-gray-100 px-5 py-4'>
 					<p className='text-gray-600'>
 						{selectedDay.format('ddd').toUpperCase() + ' ' + selectedDay.format('DD')}

@@ -85,7 +85,7 @@ const EventModal = () => {
 
 	return (
 		<div className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'>
-			<form className='bg-white rounded-lg shadow-2xl xl:w-1/4'>
+			<form className='bg-white rounded-lg shadow-2xl max-sm:mx-5 max-sm:w-full sm:max-md:w-1/2 sm:max-2xl:w-1/3'>
 				<div className='flex justify-between items-center border-b border-gray-100 px-5 py-4'>
 					<div className='text-gray-500 font-medium text-xl'>
 						{selectedEvent ? 'Edit ' : 'Add '} event
@@ -136,7 +136,7 @@ const EventModal = () => {
 						onChange={(e) => setTitle(e.target.value)}
 					/>
 
-					<div className='flex w-full justify-between items-center mb-2'>
+					<div className='flex max-lg:flex-col w-full justify-between items-center mb-2'>
 						<input
 							type='date'
 							className='w-full mr-1 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
