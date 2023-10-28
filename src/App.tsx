@@ -1,10 +1,16 @@
 import {useContext, useEffect, useState} from 'react'
 import {getMonth} from './utils/helpers'
-import {CalendarHeader, EventModal, Month} from './components'
+import {
+	CalendarHeader,
+	EventModal,
+	DeleteConfirmationModal,
+	Month,
+} from './components'
 import {GlobalContext} from './context'
 
 const App = () => {
-	const {isEventModalOpen, month} = useContext(GlobalContext)
+	const {isEventModalOpen, isDeleteConfirmationModalOpen, month} =
+		useContext(GlobalContext)
 	const [currentMonth, setCurrentMonth] = useState(getMonth())
 
 	useEffect(() => {
@@ -20,6 +26,7 @@ const App = () => {
 			</div>
 
 			{isEventModalOpen && <EventModal />}
+			{isDeleteConfirmationModalOpen && <DeleteConfirmationModal />}
 		</div>
 	)
 }

@@ -43,6 +43,8 @@ export const GlobalContext = createContext<{
 	setIsDayEventsModalOpen: Dispatch<SetStateAction<boolean>>
 	savedEvents: EventType[]
 	dispatchSaveEvent: ({type, payload}) => void
+	isDeleteConfirmationModalOpen: boolean
+	setIsDeleteConfirmationModalOpen: Dispatch<SetStateAction<boolean>>
 }>({
 	month: dayjs().month(),
 	setMonth: (m: number) => {},
@@ -56,6 +58,8 @@ export const GlobalContext = createContext<{
 	setIsDayEventsModalOpen: (o: boolean) => {},
 	savedEvents: [],
 	dispatchSaveEvent: ({type, payload}) => {},
+	isDeleteConfirmationModalOpen: false,
+	setIsDeleteConfirmationModalOpen: (o: boolean) => {},
 })
 
 const GlobalProvider = ({children}: {children: React.ReactNode}) => {
@@ -69,6 +73,8 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 		[],
 		initEvents,
 	)
+	const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
+		useState(false)
 
 	useEffect(() => {
 		isServerSide
@@ -91,6 +97,8 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 				setIsDayEventsModalOpen,
 				savedEvents,
 				dispatchSaveEvent,
+				isDeleteConfirmationModalOpen,
+				setIsDeleteConfirmationModalOpen,
 			}}
 		>
 			{children}

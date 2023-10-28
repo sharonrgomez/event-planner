@@ -22,6 +22,8 @@ const EventModal = () => {
 		setSelectedEvent,
 		selectedDay,
 		dispatchSaveEvent,
+		setIsDeleteConfirmationModalOpen,
+		setIsDayEventsModalOpen,
 	} = useContext(GlobalContext)
 
 	const handleCloseModal = () => {
@@ -68,10 +70,10 @@ const EventModal = () => {
 		setSelectedEvent(null)
 	}
 
-	const handleDeleteEvent = () => {
-		dispatchSaveEvent({type: 'delete', payload: selectedEvent})
+	const handleClickDelete = () => {
+		setIsDeleteConfirmationModalOpen(true)
 		setIsEventModalOpen(false)
-		setSelectedEvent(null)
+		setIsDayEventsModalOpen(false)
 	}
 
 	const colorOptions = getColorOptions(colorBubble)
@@ -94,7 +96,7 @@ const EventModal = () => {
 
 					<div>
 						{selectedEvent && (
-							<button onClick={handleDeleteEvent} className='mr-2'>
+							<button onClick={handleClickDelete} className='mr-2' type='button'>
 								<svg
 									xmlns='http://www.w3.org/2000/svg'
 									fill='none'
@@ -111,20 +113,6 @@ const EventModal = () => {
 								</svg>
 							</button>
 						)}
-						<button onClick={handleCloseModal}>
-							<svg
-								xmlns='http://www.w3.org/2000/svg'
-								viewBox='0 0 24 24'
-								fill='currentColor'
-								className='w-5 h-5 text-red-500 hover:text-red-700'
-							>
-								<path
-									fillRule='evenodd'
-									d='M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z'
-									clipRule='evenodd'
-								/>
-							</svg>
-						</button>
 					</div>
 				</div>
 
@@ -199,6 +187,12 @@ const EventModal = () => {
 				</div>
 
 				<div className='flex justify-end items-center w-full bg-gray-50 px-5 py-4'>
+					<button
+						className='bg-gray-400 hover:bg-gray-500 px-4 py-2 mr-2 rounded text-white'
+						onClick={handleCloseModal}
+					>
+						Close
+					</button>
 					<button
 						className='bg-blue-400 hover:bg-blue-500 px-4 py-2 rounded text-white'
 						onClick={handleSubmit}
