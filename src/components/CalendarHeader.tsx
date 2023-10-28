@@ -25,14 +25,21 @@ export const CalendarHeader = () => {
 	}
 
 	return (
-		<header className='px-4 py-2 flex items-center justify-between'>
-			<h1 className='mr-4 text-xl text-gray-500 fond-bold'>
+		<header
+			className='px-4 py-2 flex items-center justify-between'
+			data-testid='calendar-header'
+		>
+			<h1
+				className='mr-4 text-xl text-gray-500 fond-bold'
+				data-testid='calendar-header-heading'
+			>
 				{dayjs(new Date(dayjs().year(), month)).format('MMMM YYYY').toUpperCase()}
 			</h1>
 			<div className='flex'>
 				<button
 					className='rounded-full py-1 px-4 mr-3 bg-green-100 hover:bg-green-200'
 					onClick={handleOpenModal}
+					data-testid='calendar-header-add-event-button'
 				>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
@@ -46,12 +53,14 @@ export const CalendarHeader = () => {
 				<button
 					className='rounded-full py-1 px-4 mr-3 bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800'
 					onClick={handleClickToday}
+					data-testid='calendar-header-today-button'
 				>
 					Today
 				</button>
 				<button
 					className='rounded-full py-1 px-4 mr-1 bg-gray-100 hover:bg-gray-200'
 					onClick={handleClickPrev}
+					data-testid='calendar-header-prev-button'
 				>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
@@ -69,6 +78,7 @@ export const CalendarHeader = () => {
 				<button
 					className='rounded-full py-1 px-4 bg-gray-100 hover:bg-gray-200'
 					onClick={handleClickNext}
+					data-testid='calendar-header-next-button'
 				>
 					<svg
 						xmlns='http://www.w3.org/2000/svg'
