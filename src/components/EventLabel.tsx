@@ -22,7 +22,7 @@ const EventLabel = (props: EventLabelProps) => {
 			}`}
 		>
 			<p className='text-sm text-gray-600 truncate'>
-				{dayjs(event.time, 'h:mm').format('h:mm a')}{' '}
+				{dayjs(event.time, 'h:mm').format('h:mma')}{' '}
 				<span className='font-medium'>{event.title}</span>
 			</p>
 		</div>

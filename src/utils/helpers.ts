@@ -41,7 +41,6 @@ export const getMonth = (month = dayjs().month()): dayjs.Dayjs[][] => {
 export const getColorOptions = (colorBubble: string) => [
 	{
 		class: 'fill-red-400',
-		active: 'fill-red-500',
 		selected: colorBubble === 'red',
 		col: 'red',
 		bgColor: 'bg-red-400',
@@ -49,7 +48,6 @@ export const getColorOptions = (colorBubble: string) => [
 	},
 	{
 		class: 'fill-orange-400',
-		active: 'fill-orange-500',
 		selected: colorBubble === 'orange',
 		col: 'orange',
 		bgColor: 'bg-orange-400',
@@ -57,7 +55,6 @@ export const getColorOptions = (colorBubble: string) => [
 	},
 	{
 		class: 'fill-yellow-300',
-		active: 'fill-yellow-500',
 		selected: colorBubble === 'yellow',
 		col: 'yellow',
 		bgColor: 'bg-yellow-300',
@@ -65,7 +62,6 @@ export const getColorOptions = (colorBubble: string) => [
 	},
 	{
 		class: 'fill-green-400',
-		active: 'fill-green-500',
 		selected: colorBubble === 'green',
 		col: 'green',
 		bgColor: 'bg-green-400',
@@ -73,7 +69,6 @@ export const getColorOptions = (colorBubble: string) => [
 	},
 	{
 		class: 'fill-blue-400',
-		active: 'fill-blue-500',
 		selected: colorBubble === 'blue',
 		col: 'blue',
 		bgColor: 'bg-blue-400',
@@ -81,7 +76,6 @@ export const getColorOptions = (colorBubble: string) => [
 	},
 	{
 		class: 'fill-indigo-400',
-		active: 'fill-indigo-500',
 		selected: colorBubble === 'indigo',
 		col: 'indigo',
 		bgColor: 'bg-indigo-400',
