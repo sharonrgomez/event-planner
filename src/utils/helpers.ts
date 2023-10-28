@@ -14,18 +14,11 @@ export const getSortedEvents = (events: EventType[]) => {
 }
 
 export const getTotalWeeksInMonth = (year: number, month: number): number => {
-	const totalDaysInMonth = dayjs(new Date(year, month + 1, 0)).daysInMonth()
-	const firstWeekdayOfMonth = dayjs(new Date(year, month, 1)).day()
+	const firstDayOfMonth = dayjs(new Date(year, month, 1))
+	const lastDayOfMonth = firstDayOfMonth.endOf('month')
+	const daysInMonth = lastDayOfMonth.date()
 
-	let totalWeeks = 5
-	if (firstWeekdayOfMonth + totalDaysInMonth > 35) {
-		totalWeeks = 6
-	}
-	if (firstWeekdayOfMonth + totalDaysInMonth < 29) {
-		totalWeeks = 4
-	}
-
-	return totalWeeks
+	return Math.ceil((daysInMonth + firstDayOfMonth.day()) / 7)
 }
 
 export const getMonth = (month = dayjs().month()): dayjs.Dayjs[][] => {
