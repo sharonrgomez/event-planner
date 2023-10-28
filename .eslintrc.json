@@ -1,6 +1,11 @@
 {
 	"root": true,
-	"extends": ["next/core-web-vitals", "prettier"],
+	"extends": [
+		"next/core-web-vitals",
+		"prettier",
+		"plugin:testing-library/react"
+	],
+	"plugins": ["testing-library"],
 	"parserOptions": {
 		"project": "tsconfig.lint.json"
 	},

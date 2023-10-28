@@ -4,7 +4,6 @@ import {useContext} from 'react'
 
 const DeleteConfirmationModal = () => {
 	const {
-		setIsDayEventsModalOpen,
 		setIsDeleteConfirmationModalOpen,
 		setIsEventModalOpen,
 		selectedEvent,

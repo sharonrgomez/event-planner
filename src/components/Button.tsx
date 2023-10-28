@@ -4,10 +4,18 @@ type ButtonProps = {
 	variant?: 'primary' | 'standard' | 'danger'
 	compact?: boolean
 	extraClasses?: string
+	testId?: string
 }
 
 const Button = (props: ButtonProps) => {
-	const {children, compact, extraClasses, onClick, variant = 'standard'} = props
+	const {
+		children,
+		compact,
+		extraClasses = '',
+		onClick,
+		testId,
+		variant = 'standard',
+	} = props
 
 	const getVariantClasses = (variant: string) => {
 		switch (variant) {
@@ -28,6 +36,7 @@ const Button = (props: ButtonProps) => {
 				compact ? 'px-2 py-1' : 'px-4 py-2'
 			} ${extraClasses} rounded text-white`}
 			onClick={onClick}
+			data-testid={testId}
 		>
 			{children}
 		</button>
