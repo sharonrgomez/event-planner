@@ -1,6 +1,10 @@
 import '../styles/globals.css'
 import {Roboto} from 'next/font/google'
 import type {AppProps} from 'next/app'
+import dayjs from 'dayjs'
+
+var customParseFormat = require('dayjs/plugin/customParseFormat')
+dayjs.extend(customParseFormat)
 
 const inter = Roboto({
 	subsets: ['latin'],

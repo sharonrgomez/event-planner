@@ -1,4 +1,4 @@
-import {Dayjs} from 'dayjs'
+import dayjs, {Dayjs} from 'dayjs'
 import {EventType} from './EventModal'
 
 type EventLabelProps = {
@@ -22,7 +22,8 @@ const EventLabel = (props: EventLabelProps) => {
 			}`}
 		>
 			<p className='text-sm text-gray-600 truncate'>
-				{event.time} <span className='font-medium'>{event.title}</span>
+				{dayjs(event.time, 'h:mm').format('h:mm a')}{' '}
+				<span className='font-medium'>{event.title}</span>
 			</p>
 		</div>
 	)
