@@ -3,6 +3,7 @@ import {Fragment, useContext, useEffect, useState} from 'react'
 import {GlobalContext} from '../context'
 import EventLabel from './EventLabel'
 import {EventType} from './EventModal'
+import {getSortedEvents} from '../utils/helpers'
 
 type DayProps = {
 	day: Dayjs
@@ -55,6 +56,8 @@ const Day = (props: DayProps) => {
 		setIsDayEventsModalOpen(true)
 	}
 
+	const sortedEvents = getSortedEvents(dayEvents)
+
 	return (
 		<>
 			<div className='border border-gray-100 flex flex-col'>
@@ -72,15 +75,15 @@ const Day = (props: DayProps) => {
 				</div>
 
 				<div className='flex-1 cursor-pointer' onClick={() => handleClickDay(day)}>
-					{dayEvents.slice(0, 2).map((event, idx) => (
+					{sortedEvents.slice(0, 2).map((event, idx) => (
 						<Fragment key={idx}>
 							<EventLabel event={event} clickEventHandler={handleClickEvent} />
 						</Fragment>
 					))}
-					{dayEvents.length > 2 && (
+					{sortedEvents.length > 2 && (
 						<div
 							onClick={(e) => handleClickMoreBtn(e, day)}
-							className='p-1 mx-2 rounded mb-1 hover:bg-gray-100'
+							className='px-1 mx-1 rounded mb-1 hover:bg-gray-100'
 						>
 							<p className='text-sm text-center text-gray-600 truncate text-xs'>
 								{`+${dayEvents.length - 2} more`}

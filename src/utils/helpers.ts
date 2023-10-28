@@ -1,4 +1,17 @@
 import dayjs from 'dayjs'
+import {EventType} from '../components/EventModal'
+
+export const getSortedEvents = (events: EventType[]) => {
+	return events.sort((a, b) => {
+		const aTime = a.time.split(':')
+		const bTime = b.time.split(':')
+
+		const aInMinutes = parseInt(aTime[0]) * 60 + parseInt(aTime[1])
+		const bInMinutes = parseInt(bTime[0]) * 60 + parseInt(bTime[1])
+
+		return aInMinutes - bInMinutes
+	})
+}
 
 export const getTotalWeeksInMonth = (year: number, month: number): number => {
 	const totalDaysInMonth = dayjs(new Date(year, month + 1, 0)).daysInMonth()

@@ -2,6 +2,7 @@ import {Fragment, useContext} from 'react'
 import {GlobalContext} from '../context'
 import {EventType} from './EventModal'
 import {EventLabel} from '.'
+import {getSortedEvents} from '../utils/helpers'
 
 type DayEventsModalProps = {
 	events: EventType[]
@@ -26,6 +27,8 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 		setIsEventModalOpen(true)
 	}
 
+	const sortedEvents = getSortedEvents(events)
+
 	return (
 		<div className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'>
 			<div className='bg-white rounded-lg shadow-2xl max-sm:w-1/2 sm:max-md:w-1/4 sm:max-2xl:w-1/6'>
@@ -46,7 +49,7 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 					</button>
 				</div>
 				<div className='flex flex-col items-center justify-center p-5'>
-					{events.map((event, idx) => (
+					{sortedEvents.map((event, idx) => (
 						<Fragment key={idx}>
 							<EventLabel
 								event={event}
