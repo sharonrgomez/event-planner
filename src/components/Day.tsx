@@ -83,9 +83,9 @@ const Day = (props: DayProps) => {
 					data-testid='day-events'
 				>
 					{sortedEvents.slice(0, 2).map((event, idx) => (
-						<Fragment key={idx} data-testid='day-event-label'>
+						<div key={idx} data-testid='day-event-label'>
 							<EventLabel event={event} clickEventHandler={handleClickEvent} />
-						</Fragment>
+						</div>
 					))}
 					{sortedEvents.length > 2 && (
 						<div
