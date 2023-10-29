@@ -60,23 +60,30 @@ const Day = (props: DayProps) => {
 
 	return (
 		<>
-			<div className='border border-gray-100 flex flex-col'>
+			<div className='border border-gray-100 flex flex-col' data-testid='day'>
 				{rowIdx === 0 && (
-					<div className='text-xs border-b text-center row-start-1'>
+					<div
+						className='text-xs border-b text-center row-start-1'
+						data-testid='day-weekday'
+					>
 						<p className='font-medium text-gray-400 my-1 mt-1'>
 							{day.format('ddd').toUpperCase()}
 						</p>
 					</div>
 				)}
-				<div className='flex flex-col items-center'>
+				<div className='flex flex-col items-center' data-testid='day-date'>
 					<p className={`text-sm p-1 my-1 text-center ${getCurrentDayStyles()}`}>
 						{day.format('DD')}
 					</p>
 				</div>
 
-				<div className='flex-1 cursor-pointer' onClick={() => handleClickDay(day)}>
+				<div
+					className='flex-1 cursor-pointer'
+					onClick={() => handleClickDay(day)}
+					data-testid='day-events'
+				>
 					{sortedEvents.slice(0, 2).map((event, idx) => (
-						<Fragment key={idx}>
+						<Fragment key={idx} data-testid='day-event-label'>
 							<EventLabel event={event} clickEventHandler={handleClickEvent} />
 						</Fragment>
 					))}
@@ -84,6 +91,7 @@ const Day = (props: DayProps) => {
 						<div
 							onClick={(e) => handleClickMoreBtn(e, day)}
 							className='px-1 mx-1 rounded mb-1 hover:bg-gray-100'
+							data-testid='day-more-events-button'
 						>
 							<p className='text-sm text-center text-gray-600 truncate text-xs'>
 								{`+${dayEvents.length - 2} more`}

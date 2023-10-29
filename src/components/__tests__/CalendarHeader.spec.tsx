@@ -5,7 +5,7 @@ jest.mock('dayjs', () => ({
 	__esModule: true,
 	default: () => ({
 		format: jest.fn().mockReturnValue('february 2024'),
-		month: jest.fn().mockReturnValue(1),
+		month: jest.fn().mockReturnValue({format: jest.fn()}),
 		year: jest.fn().mockReturnValue(2024),
 	}),
 }))
