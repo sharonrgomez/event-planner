@@ -3,6 +3,7 @@ import {GlobalContext} from '../context'
 import dayjs from 'dayjs'
 import {getColorOptions} from '../utils/helpers'
 import {Button} from '.'
+import {v4 as uuid} from 'uuid'
 
 export type EventType = {
 	id: string
@@ -58,7 +59,7 @@ const EventModal = () => {
 				color: colorOptions[2].bgColor,
 				hoverColor: colorOptions[2].hoverBgColor,
 			},
-			id: selectedEvent ? selectedEvent.id : Date.now(),
+			id: selectedEvent ? selectedEvent.id : uuid(),
 		}
 
 		if (selectedEvent) {
