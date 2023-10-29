@@ -1,4 +1,5 @@
 import {render, screen} from '@testing-library/react'
+import {Day} from '..'
 
 jest.mock('dayjs', () => ({
 	__esModule: true,
@@ -7,8 +8,6 @@ jest.mock('dayjs', () => ({
 		month: jest.fn().mockReturnValue({format: jest.fn()}),
 	}),
 }))
-
-import {Day} from '..'
 
 describe('Day', () => {
 	const testId = 'day'
