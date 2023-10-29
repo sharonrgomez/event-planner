@@ -9,7 +9,7 @@ jest.mock('dayjs', () => ({
 	}),
 }))
 
-describe('Day', () => {
+describe('<Day />', () => {
 	const testId = 'day'
 
 	const props = {

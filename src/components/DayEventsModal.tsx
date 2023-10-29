@@ -30,14 +30,20 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 	const sortedEvents = getSortedEvents(events)
 
 	return (
-		<div className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'>
+		<div
+			className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'
+			data-testid='day-events-modal'
+		>
 			<div className='bg-white rounded-lg shadow-2xl max-sm:w-1/2 sm:max-md:w-1/4 sm:max-2xl:w-1/6'>
 				<div className='flex justify-between items-center border-b border-gray-100 px-5 py-4'>
-					<p className='text-gray-600'>
+					<p className='text-gray-600' data-testid='day-events-modal-title'>
 						{selectedDay.format('ddd').toUpperCase() + ' ' + selectedDay.format('DD')}
 					</p>
 
-					<button onClick={handleCloseModal}>
+					<button
+						onClick={handleCloseModal}
+						data-testid='day-events-modal-close-button'
+					>
 						<svg
 							xmlns='http://www.w3.org/2000/svg'
 							viewBox='0 0 20 20'
@@ -48,13 +54,17 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 						</svg>
 					</button>
 				</div>
-				<div className='flex flex-col items-center justify-center p-5'>
+				<div
+					className='flex flex-col items-center justify-center p-5'
+					data-testid='day-events-modal-events'
+				>
 					{sortedEvents.map((event, idx) => (
 						<Fragment key={idx}>
 							<EventLabel
 								event={event}
 								clickEventHandler={handleClickEvent}
 								isFullWidth
+								testId='day-events-modal-event-label'
 							/>
 						</Fragment>
 					))}
