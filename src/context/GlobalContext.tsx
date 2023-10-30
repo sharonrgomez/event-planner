@@ -46,7 +46,7 @@ export const GlobalContext = createContext<{
 	isDeleteConfirmationModalOpen: boolean
 	setIsDeleteConfirmationModalOpen: Dispatch<SetStateAction<boolean>>
 	isLabelOptionsModalOpen: boolean
-	setIsLabelOppionsModalOpen: Dispatch<SetStateAction<boolean>>
+	setIsLabelOptionsModalOpen: Dispatch<SetStateAction<boolean>>
 }>({
 	month: dayjs().month(),
 	setMonth: (m: number) => {},
@@ -63,7 +63,7 @@ export const GlobalContext = createContext<{
 	isDeleteConfirmationModalOpen: false,
 	setIsDeleteConfirmationModalOpen: (o: boolean) => {},
 	isLabelOptionsModalOpen: false,
-	setIsLabelOppionsModalOpen: (o: boolean) => {},
+	setIsLabelOptionsModalOpen: (o: boolean) => {},
 })
 
 const GlobalProvider = ({children}: {children: React.ReactNode}) => {
@@ -79,7 +79,7 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 	)
 	const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
 		useState(false)
-	const [isLabelOptionsModalOpen, setIsLabelOppionsModalOpen] = useState(false)
+	const [isLabelOptionsModalOpen, setIsLabelOptionsModalOpen] = useState(false)
 
 	useEffect(() => {
 		isServerSide
@@ -105,7 +105,7 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 				isDeleteConfirmationModalOpen,
 				setIsDeleteConfirmationModalOpen,
 				isLabelOptionsModalOpen,
-				setIsLabelOppionsModalOpen,
+				setIsLabelOptionsModalOpen,
 			}}
 		>
 			{children}

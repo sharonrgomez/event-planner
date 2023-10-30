@@ -26,7 +26,7 @@ const EventModal = () => {
 		dispatchSaveEvent,
 		setIsDeleteConfirmationModalOpen,
 		setIsDayEventsModalOpen,
-		setIsLabelOppionsModalOpen,
+		setIsLabelOptionsModalOpen,
 	} = useContext(GlobalContext)
 
 	const handleCloseModal = () => {
@@ -139,7 +139,7 @@ const EventModal = () => {
 							value={title}
 							onChange={(e) => setTitle(e.target.value)}
 						/>
-						<LabelColorSelect onClick={setIsLabelOppionsModalOpen} />
+						<LabelColorSelect onClick={setIsLabelOptionsModalOpen} />
 					</div>
 					<div className='flex max-lg:flex-col w-full justify-between items-center mb-2'>
 						<input
