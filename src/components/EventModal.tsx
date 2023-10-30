@@ -89,16 +89,27 @@ const EventModal = () => {
 	}, [selectedEvent])
 
 	return (
-		<div className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'>
+		<div
+			className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'
+			data-testid='event-modal'
+		>
 			<form className='bg-white rounded-lg shadow-2xl max-sm:mx-5 max-sm:w-full sm:max-md:w-1/2 sm:max-2xl:w-1/3'>
 				<div className='flex justify-between items-center border-b border-gray-100 px-5 py-4'>
-					<div className='text-gray-600 font-medium text-xl'>
+					<div
+						className='text-gray-600 font-medium text-xl'
+						data-testid='event-modal-title'
+					>
 						{selectedEvent ? 'Edit ' : 'Add '} event
 					</div>
 
 					<div>
 						{selectedEvent && (
-							<button onClick={handleClickDelete} className='mr-2' type='button'>
+							<button
+								onClick={handleClickDelete}
+								className='mr-2'
+								type='button'
+								data-testid='event-modal-delete-button'
+							>
 								<svg
 									xmlns='http://www.w3.org/2000/svg'
 									fill='none'
@@ -153,7 +164,10 @@ const EventModal = () => {
 					/>
 				</div>
 
-				<div className='flex flex-row items-center justify-center pb-5'>
+				<div
+					className='flex flex-row items-center justify-center pb-5'
+					data-testid='event-modal-color-options'
+				>
 					{colorOptions.map((col, idx) => (
 						<div
 							className='p-1 focus:ring-2'
@@ -168,6 +182,7 @@ const EventModal = () => {
 									xmlns='http://www.w3.org/2000/svg'
 									viewBox='0 0 24 24'
 									className={`w-6 h-6 cursor-pointer ${col.class}`}
+									data-testid='event-modal-selected-color'
 								>
 									<path
 										fillRule='evenodd'
@@ -180,6 +195,7 @@ const EventModal = () => {
 									xmlns='http://www.w3.org/2000/svg'
 									viewBox='0 0 24 24'
 									className={`w-5 h-5 cursor-pointer ${col.class}`}
+									data-testid='event-modal-color'
 								>
 									<path d='M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75-9.75-4.365-9.75-9.75 4.365-9.75 9.75-9.75zm0 0' />
 								</svg>
@@ -189,10 +205,18 @@ const EventModal = () => {
 				</div>
 
 				<div className='flex justify-end items-center w-full bg-gray-50 px-5 py-4'>
-					<Button extraClasses='mr-2' onClick={handleCloseModal}>
+					<Button
+						extraClasses='mr-2'
+						onClick={handleCloseModal}
+						testId='event-modal-close-button'
+					>
 						Close
 					</Button>
-					<Button onClick={handleSubmit} variant='primary'>
+					<Button
+						onClick={handleSubmit}
+						variant='primary'
+						testId='event-modal-save-button'
+					>
 						Save
 					</Button>
 				</div>
