@@ -2,7 +2,7 @@ import {useContext, useEffect, useState} from 'react'
 import {GlobalContext} from '../context'
 import dayjs from 'dayjs'
 import {getColorOptions} from '../utils/helpers'
-import {Button} from '.'
+import {Button, LabelColorOptionsModal, LabelColorSelect} from '.'
 import {v4 as uuid} from 'uuid'
 
 export type EventType = {
@@ -26,6 +26,7 @@ const EventModal = () => {
 		dispatchSaveEvent,
 		setIsDeleteConfirmationModalOpen,
 		setIsDayEventsModalOpen,
+		setIsLabelOppionsModalOpen,
 	} = useContext(GlobalContext)
 
 	const handleCloseModal = () => {
@@ -129,19 +130,21 @@ const EventModal = () => {
 					</div>
 				</div>
 
-				<div className='flex flex-col items-center justify-center p-5 pb-1'>
-					<input
-						type='text'
-						className='w-full mb-2 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
-						placeholder='Title'
-						value={title}
-						onChange={(e) => setTitle(e.target.value)}
-					/>
-
+				<div className='flex flex-col items-center p-5 pb-1'>
+					<div className='flex flex-row items-center w-full'>
+						<input
+							type='text'
+							className='w-full mb-2 mr-1 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
+							placeholder='Title'
+							value={title}
+							onChange={(e) => setTitle(e.target.value)}
+						/>
+						<LabelColorSelect onClick={setIsLabelOppionsModalOpen} />
+					</div>
 					<div className='flex max-lg:flex-col w-full justify-between items-center mb-2'>
 						<input
 							type='date'
-							className='w-full mr-1 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
+							className='w-full mr-2 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
 							placeholder='Date'
 							value={date}
 							onChange={(e) => setDate(e.target.value)}
@@ -162,46 +165,6 @@ const EventModal = () => {
 						value={description}
 						onChange={(e) => setDescription(e.target.value)}
 					/>
-				</div>
-
-				<div
-					className='flex flex-row items-center justify-center pb-5'
-					data-testid='event-modal-color-options'
-				>
-					{colorOptions.map((col, idx) => (
-						<div
-							className='p-1 focus:ring-2'
-							key={idx}
-							onClick={() => {
-								setColorBubble(col.col)
-								setEventColor({color: col.bgColor, hoverColor: col.hoverBgColor})
-							}}
-						>
-							{col.selected ? (
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									viewBox='0 0 24 24'
-									className={`w-6 h-6 cursor-pointer ${col.class}`}
-									data-testid='event-modal-selected-color'
-								>
-									<path
-										fillRule='evenodd'
-										d='M2.25 12c0-5.385 4.365-9.75 9.75-9.75s9.75 4.365 9.75 9.75-4.365 9.75-9.75 9.75S2.25 17.385 2.25 12zm13.36-1.814a.75.75 0 10-1.22-.872l-3.236 4.53L9.53 12.22a.75.75 0 00-1.06 1.06l2.25 2.25a.75.75 0 001.14-.094l3.75-5.25z'
-										clipRule='evenodd'
-									/>
-								</svg>
-							) : (
-								<svg
-									xmlns='http://www.w3.org/2000/svg'
-									viewBox='0 0 24 24'
-									className={`w-5 h-5 cursor-pointer ${col.class}`}
-									data-testid='event-modal-color'
-								>
-									<path d='M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75-9.75-4.365-9.75-9.75 4.365-9.75 9.75-9.75zm0 0' />
-								</svg>
-							)}
-						</div>
-					))}
 				</div>
 
 				<div className='flex justify-end items-center w-full bg-gray-50 px-5 py-4'>
