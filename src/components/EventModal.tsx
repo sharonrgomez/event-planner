@@ -2,7 +2,7 @@ import {useContext, useEffect, useState} from 'react'
 import {GlobalContext} from '../context'
 import dayjs from 'dayjs'
 import {getColorOptions} from '../utils/helpers'
-import {Button, LabelColorOptionsModal, LabelColorSelect} from '.'
+import {Button, LabelColorSelect} from '.'
 import {v4 as uuid} from 'uuid'
 
 export type EventType = {
