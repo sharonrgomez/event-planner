@@ -82,6 +82,10 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 	const [isLabelOptionsModalOpen, setIsLabelOptionsModalOpen] = useState(false)
 
 	useEffect(() => {
+		if (!isEventModalOpen) setIsLabelOptionsModalOpen(false)
+	}, [isEventModalOpen])
+
+	useEffect(() => {
 		isServerSide
 			? undefined
 			: localStorage.setItem('savedEvents', JSON.stringify(savedEvents))

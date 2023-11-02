@@ -1,4 +1,4 @@
-import {Fragment, useContext} from 'react'
+import {Fragment, useCallback, useContext, useEffect, useRef} from 'react'
 import {GlobalContext} from '../context'
 import {EventType} from './EventModal'
 import {EventLabel} from '.'
@@ -29,12 +29,33 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 
 	const sortedEvents = getSortedEvents(events)
 
+	const ref = useRef<HTMLDivElement>(null)
+
+	const handleClickOutside = useCallback(
+		(e: MouseEvent) => {
+			if (ref.current && !ref.current.contains(e.target as Node)) {
+				setIsDayEventsModalOpen(false)
+			}
+		},
+		[setIsDayEventsModalOpen],
+	)
+
+	useEffect(() => {
+		document.addEventListener('mousedown', handleClickOutside)
+		return () => {
+			document.removeEventListener('mousedown', handleClickOutside)
+		}
+	}, [handleClickOutside])
+
 	return (
 		<div
 			className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'
 			data-testid='day-events-modal'
 		>
-			<div className='bg-white rounded-lg shadow-2xl max-sm:w-1/2 sm:max-md:w-1/4 sm:max-2xl:w-1/6'>
+			<div
+				className='bg-white rounded-lg shadow-2xl max-sm:w-1/2 sm:max-md:w-1/4 sm:max-2xl:w-1/6'
+				ref={ref}
+			>
 				<div className='flex justify-between items-center border-b border-gray-100 px-5 py-4'>
 					<p className='text-gray-600' data-testid='day-events-modal-title'>
 						{selectedDay.format('ddd').toUpperCase() + ' ' + selectedDay.format('DD')}
