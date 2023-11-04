@@ -1,9 +1,9 @@
 import {useCallback, useContext, useEffect, useRef, useState} from 'react'
 import {GlobalContext} from '../context'
 import dayjs from 'dayjs'
-import {getColorOptions} from '../utils/helpers'
 import {Button, LabelColorSelect} from '.'
 import {v4 as uuid} from 'uuid'
+import {colorOptions} from './LabelOptionsModal'
 
 export type EventType = {
 	id: string
@@ -11,10 +11,7 @@ export type EventType = {
 	description: string
 	date: string
 	time: string
-	label: {
-		color: string
-		hoverColor: string
-	}
+	labelColor: string
 }
 
 const EventModal = () => {
@@ -45,10 +42,16 @@ const EventModal = () => {
 		selectedEvent ? selectedEvent.time : dayjs().format('HH:mm'),
 	)
 
-	const [colorBubble, setColorBubble] = useState('yellow')
+	const [colorBubble, setColorBubble] = useState(colorOptions[2])
 	const [eventColor, setEventColor] = useState(
-		selectedEvent ? selectedEvent.label : '',
+		selectedEvent ? selectedEvent.labelColor : '',
 	)
+
+	const handleSelectColor = (color: string) => {
+		setColorBubble(color)
+		setEventColor(color)
+		setIsLabelOptionsModalOpen(false)
+	}
 
 	const handleSubmit = () => {
 		const payload = {
@@ -56,10 +59,7 @@ const EventModal = () => {
 			description,
 			date,
 			time,
-			label: eventColor || {
-				color: colorOptions[2].bgColor,
-				hoverColor: colorOptions[2].hoverBgColor,
-			},
+			labelColor: eventColor || colorOptions[2],
 			id: selectedEvent ? selectedEvent.id : uuid(),
 		}
 
@@ -79,12 +79,10 @@ const EventModal = () => {
 		setIsDayEventsModalOpen(false)
 	}
 
-	const colorOptions = getColorOptions(colorBubble)
-
 	useEffect(() => {
 		colorOptions.map((col) => {
-			if (selectedEvent && selectedEvent.label.color.includes(col.col)) {
-				setColorBubble(col.col)
+			if (selectedEvent && selectedEvent.labelColor === col) {
+				setColorBubble(col)
 			}
 		})
 	}, [selectedEvent])
@@ -95,9 +93,10 @@ const EventModal = () => {
 		(e: MouseEvent) => {
 			if (ref.current && !ref.current.contains(e.target as Node)) {
 				setIsEventModalOpen(false)
+				setSelectedEvent(null)
 			}
 		},
-		[setIsEventModalOpen],
+		[setIsEventModalOpen, setSelectedEvent],
 	)
 
 	useEffect(() => {
@@ -161,7 +160,11 @@ const EventModal = () => {
 								value={title}
 								onChange={(e) => setTitle(e.target.value)}
 							/>
-							<LabelColorSelect onClick={setIsLabelOptionsModalOpen} />
+							<LabelColorSelect
+								onClick={setIsLabelOptionsModalOpen}
+								selectedColor={colorBubble}
+								onSelectColor={handleSelectColor}
+							/>
 						</div>
 						<div className='flex max-lg:flex-col w-full justify-between items-center mb-2'>
 							<input

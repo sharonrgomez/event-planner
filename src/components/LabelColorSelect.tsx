@@ -1,28 +1,27 @@
-import {Color} from 'react-color'
 import {LabelOptionsModal} from '.'
 import {GlobalContext} from '../context'
-import {useContext, useState} from 'react'
+import {useContext} from 'react'
 
-const LabelColorSelect = ({onClick}) => {
-	const {isLabelOptionsModalOpen, setIsLabelOptionsModalOpen} =
-		useContext(GlobalContext)
+type LabelColorSelectProps = {
+	onClick: any
+	selectedColor: string
+	onSelectColor: (color: string) => void
+}
 
-	const [selectedColor, setSelectedColor] = useState<Color | string>('#fff')
+const LabelColorSelect = (props: LabelColorSelectProps) => {
+	const {onClick, selectedColor, onSelectColor} = props
 
-	const handleSelectColor = (color) => {
-		setSelectedColor(color)
-		setIsLabelOptionsModalOpen(false)
-	}
+	const {isLabelOptionsModalOpen} = useContext(GlobalContext)
 
 	return (
 		<div
-			className='flex flex-row cursor-pointer items-center hover:bg-gray-50 rounded p-2 relative'
+			className='flex flex-row cursor-pointer items-center hover:bg-gray-50 rounded p-2 relative w-16 justify-between'
 			onClick={onClick}
 		>
 			<svg
 				xmlns='http://www.w3.org/2000/svg'
 				viewBox='0 0 24 24'
-				className='w-5 h-5 fill-red-400'
+				style={{fill: selectedColor, width: '22px', height: '22px'}}
 			>
 				<path d='M12 2.25c5.385 0 9.75 4.365 9.75 9.75s-4.365 9.75-9.75 9.75-9.75-4.365-9.75-9.75 4.365-9.75 9.75-9.75zm0 0' />
 			</svg>
@@ -41,7 +40,7 @@ const LabelColorSelect = ({onClick}) => {
 
 			{isLabelOptionsModalOpen && (
 				<LabelOptionsModal
-					onSelectColor={handleSelectColor}
+					onSelectColor={onSelectColor}
 					selectedColor={selectedColor}
 				/>
 			)}

@@ -1,5 +1,6 @@
 import dayjs from 'dayjs'
 import {EventType} from './EventModal'
+import {useEffect, useState} from 'react'
 
 type EventLabelProps = {
 	event?: EventType
@@ -14,9 +15,10 @@ const EventLabel = (props: EventLabelProps) => {
 	return (
 		<div
 			onClick={() => clickEventHandler(event)}
-			className={`${event.label.color} ${
-				event.label.hoverColor
-			} px-1 mx-1 rounded mb-1 cursor-pointer items-center ${
+			style={{
+				background: event.labelColor,
+			}}
+			className={`px-1 mx-1 rounded mb-1 cursor-pointer items-center ${
 				isFullWidth ? 'w-full' : ''
 			}`}
 			data-testid={testId}
