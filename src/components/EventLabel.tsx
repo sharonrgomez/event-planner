@@ -1,6 +1,5 @@
 import dayjs from 'dayjs'
 import {EventType} from './EventModal'
-import {useEffect, useState} from 'react'
 
 type EventLabelProps = {
 	event?: EventType

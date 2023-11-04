@@ -9,10 +9,7 @@ var contextMock = {
 		description: 'test',
 		date: '12-25-2023',
 		time: '09:30',
-		label: {
-			color: 'bg-red-400',
-			hoverColor: 'bg-red-500',
-		},
+		labelColor: 'blah',
 	},
 	setSelectedEvent: jest.fn(),
 	isEventModalOpen: false,

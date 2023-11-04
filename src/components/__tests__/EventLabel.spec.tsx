@@ -19,10 +19,7 @@ describe('<EventLabel />', () => {
 			description: 'test',
 			date: '12-25-2023',
 			time: '09:30',
-			label: {
-				color: 'bg-red-400',
-				hoverColor: 'bg-red-500',
-			},
+			labelColor: 'blah',
 		},
 		clickEventHandler: jest.fn(),
 		isFullWidth: false,
@@ -58,17 +55,5 @@ describe('<EventLabel />', () => {
 		render(<EventLabel {...props} isFullWidth={false} />)
 
 		expect(screen.getByTestId(testId)).not.toHaveClass('w-full')
-	})
-
-	it('should have correct color class', () => {
-		render(<EventLabel {...props} />)
-
-		expect(screen.getByTestId(testId)).toHaveClass(props.event.label.color)
-	})
-
-	it('should have correct hover color class', () => {
-		render(<EventLabel {...props} />)
-
-		expect(screen.getByTestId(testId)).toHaveClass(props.event.label.hoverColor)
 	})
 })

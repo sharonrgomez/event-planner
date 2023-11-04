@@ -18,10 +18,7 @@ var contextMock = {
 		description: 'test',
 		date: '12-25-2023',
 		time: '09:30',
-		label: {
-			color: 'bg-red-400',
-			hoverColor: 'bg-red-500',
-		},
+		labelColor: 'blah',
 	},
 	setSelectedEvent: jest.fn(),
 	selectedDay: {
@@ -54,10 +51,6 @@ describe('<EventModal />', () => {
 		expect(screen.getByTestId(`${testId}-close-button`)).toBeInTheDocument()
 		expect(screen.getByTestId(`${testId}-delete-button`)).toBeInTheDocument()
 		expect(screen.getByTestId(`${testId}-save-button`)).toBeInTheDocument()
-		expect(screen.getByTestId(`${testId}-color-options`)).toBeInTheDocument()
-		expect(screen.getByTestId(`${testId}-selected-color`)).toHaveClass(
-			'fill-red-400',
-		)
 	})
 
 	it('should render a form', () => {

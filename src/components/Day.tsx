@@ -1,5 +1,5 @@
 import dayjs, {Dayjs} from 'dayjs'
-import {Fragment, useContext, useEffect, useState} from 'react'
+import {useContext, useEffect, useState} from 'react'
 import {GlobalContext} from '../context'
 import EventLabel from './EventLabel'
 import {EventType} from './EventModal'
