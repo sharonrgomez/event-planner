@@ -7,12 +7,23 @@ type LabelOptionsModalProps = {
 }
 
 export const colorOptions = [
+	// rainbow
 	'#f87171',
 	'#fb923c',
 	'#facc15',
 	'#4ade80',
 	'#60a5fa',
 	'#a78bfa',
+
+	// pastel rainbow
+	'#F7A3A3',
+	'#FCBF8D',
+	'#FFEB9D',
+	'#B9E6C9',
+	'#B3CFEF',
+	'#D2C5FA',
+
+	// neutrals
 	'#E0E0E0',
 	'#CCC6C5',
 	'#B7ACA9',
@@ -85,7 +96,7 @@ const LabelOptionsModal = (props: LabelOptionsModalProps) => {
 							<path
 								d='M30 50 L45 65 L75 36'
 								stroke='white'
-								stroke-width='8'
+								strokeWidth='8'
 								fill='none'
 							/>
 						) : (
