@@ -15,7 +15,7 @@ const LabelColorSelect = (props: LabelColorSelectProps) => {
 
 	return (
 		<div
-			className='flex flex-row cursor-pointer items-center hover:bg-gray-50 rounded p-2 relative w-16 justify-between'
+			className='flex flex-row cursor-pointer items-center hover:bg-gray-50 rounded p-2 pl-1 ml-2 relative w-16 justify-between'
 			onClick={onClick}
 		>
 			<svg

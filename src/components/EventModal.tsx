@@ -31,6 +31,8 @@ const EventModal = () => {
 		setSelectedEvent(null)
 	}
 
+	const [required, setRequired] = useState(false)
+
 	const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : '')
 	const [description, setDescription] = useState(
 		selectedEvent ? selectedEvent.description : '',
@@ -42,7 +44,7 @@ const EventModal = () => {
 		selectedEvent ? selectedEvent.time : dayjs().format('HH:mm'),
 	)
 
-	const [colorBubble, setColorBubble] = useState(colorOptions[2])
+	const [colorBubble, setColorBubble] = useState(colorOptions[8])
 	const [eventColor, setEventColor] = useState(
 		selectedEvent ? selectedEvent.labelColor : '',
 	)
@@ -52,14 +54,26 @@ const EventModal = () => {
 		setEventColor(color)
 		setIsLabelOptionsModalOpen(false)
 	}
+	useEffect(() => {
+		if (title) {
+			setRequired(false)
+		}
+	}, [title])
 
-	const handleSubmit = () => {
+	const handleSubmit = (e) => {
+		e.preventDefault()
+
+		if (!title) {
+			setRequired(true)
+			return
+		}
+
 		const payload = {
 			title,
 			description,
 			date,
 			time,
-			labelColor: eventColor || colorOptions[2],
+			labelColor: eventColor || colorOptions[8],
 			id: selectedEvent ? selectedEvent.id : uuid(),
 		}
 
@@ -115,7 +129,7 @@ const EventModal = () => {
 				className='bg-white rounded-lg shadow-2xl max-sm:mx-5 max-sm:w-full sm:max-md:w-1/2 sm:max-2xl:w-1/3'
 				ref={ref}
 			>
-				<form>
+				<form action=''>
 					<div className='flex justify-between items-center border-b border-gray-100 px-5 py-4'>
 						<div
 							className='text-gray-600 font-medium text-xl'
@@ -153,19 +167,26 @@ const EventModal = () => {
 
 					<div className='flex flex-col items-center p-5 pb-1'>
 						<div className='flex flex-row items-center w-full'>
+							{/* <div className='flex flex-col w-full'> */}
 							<input
 								type='text'
 								className='w-full mb-2 mr-1 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
 								placeholder='Title'
 								value={title}
 								onChange={(e) => setTitle(e.target.value)}
+								required
 							/>
+
+							{/* </div> */}
 							<LabelColorSelect
 								onClick={setIsLabelOptionsModalOpen}
 								selectedColor={colorBubble}
 								onSelectColor={handleSelectColor}
 							/>
 						</div>
+						{required && (
+							<p className='text-red-400 text-sm ml-3 w-full'>Please enter a title</p>
+						)}
 						<div className='flex max-lg:flex-col w-full justify-between items-center mb-2'>
 							<input
 								type='date'
@@ -204,6 +225,7 @@ const EventModal = () => {
 							onClick={handleSubmit}
 							variant='primary'
 							testId='event-modal-save-button'
+							submit
 						>
 							Save
 						</Button>

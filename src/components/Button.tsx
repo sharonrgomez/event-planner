@@ -1,10 +1,13 @@
+import {MouseEventHandler} from 'react'
+
 type ButtonProps = {
-	onClick: () => void
+	onClick: MouseEventHandler
 	children: React.ReactNode
 	variant?: 'primary' | 'standard' | 'danger'
 	compact?: boolean
 	extraClasses?: string
 	testId?: string
+	submit?: boolean
 }
 
 const Button = (props: ButtonProps) => {
@@ -15,6 +18,7 @@ const Button = (props: ButtonProps) => {
 		onClick,
 		testId,
 		variant = 'standard',
+		submit,
 	} = props
 
 	const getVariantClasses = (variant: string) => {
@@ -37,6 +41,7 @@ const Button = (props: ButtonProps) => {
 			} ${extraClasses} rounded text-white`}
 			onClick={onClick}
 			data-testid={testId}
+			type={submit ? 'submit' : 'button'}
 		>
 			{children}
 		</button>
