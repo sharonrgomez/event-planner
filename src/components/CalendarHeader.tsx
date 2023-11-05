@@ -26,11 +26,11 @@ export const CalendarHeader = () => {
 
 	return (
 		<header
-			className='px-4 py-2 flex items-center justify-between'
+			className='px-4 py-2 flex items-center justify-between flex-wrap'
 			data-testid='calendar-header'
 		>
 			<h1
-				className='mr-4 text-xl text-gray-500 fond-bold'
+				className='mr-4 my-2 text-xl text-gray-500 fond-bold'
 				data-testid='calendar-header-heading'
 			>
 				{dayjs(new Date(dayjs().year(), month)).format('MMMM YYYY').toUpperCase()}

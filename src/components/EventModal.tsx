@@ -193,7 +193,7 @@ const EventModal = () => {
 						<div className='flex max-lg:flex-col w-full justify-between items-center mb-2'>
 							<input
 								type='date'
-								className='w-full mr-2 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
+								className='w-full mr-2 max-lg:mr-0 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
 								placeholder='Date'
 								value={date}
 								onChange={(e) => setDate(e.target.value)}
@@ -201,7 +201,7 @@ const EventModal = () => {
 							{!allDay && (
 								<input
 									type='time'
-									className='w-full ml-1 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
+									className='w-full ml-1 max-lg:ml-0 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
 									placeholder='Time'
 									value={time}
 									onChange={(e) => setTime(e.target.value)}
