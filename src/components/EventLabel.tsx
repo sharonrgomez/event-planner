@@ -24,7 +24,7 @@ const EventLabel = (props: EventLabelProps) => {
 		>
 			<p className='text-sm text-gray-600 truncate'>
 				<span data-testid='event-label-time'>
-					{dayjs(event.time, 'h:mm').format('h:mma')}
+					{!event.allDay ? dayjs(event.time, 'h:mm').format('h:mma') : ''}
 				</span>{' '}
 				<span data-testid='event-label-title' className='font-medium'>
 					{event.title}

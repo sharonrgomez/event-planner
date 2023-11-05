@@ -12,6 +12,7 @@ export type EventType = {
 	date: string
 	time: string
 	labelColor: string
+	allDay: boolean
 }
 
 const EventModal = () => {
@@ -42,6 +43,9 @@ const EventModal = () => {
 	)
 	const [time, setTime] = useState(
 		selectedEvent ? selectedEvent.time : dayjs().format('HH:mm'),
+	)
+	const [allDay, setAllDay] = useState(
+		selectedEvent ? selectedEvent.allDay : false,
 	)
 
 	const [colorBubble, setColorBubble] = useState(colorOptions[8])
@@ -75,6 +79,7 @@ const EventModal = () => {
 			time,
 			labelColor: eventColor || colorOptions[8],
 			id: selectedEvent ? selectedEvent.id : uuid(),
+			allDay,
 		}
 
 		if (selectedEvent) {
@@ -167,7 +172,6 @@ const EventModal = () => {
 
 					<div className='flex flex-col items-center p-5 pb-1'>
 						<div className='flex flex-row items-center w-full'>
-							{/* <div className='flex flex-col w-full'> */}
 							<input
 								type='text'
 								className='w-full mb-2 mr-1 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
@@ -176,8 +180,6 @@ const EventModal = () => {
 								onChange={(e) => setTitle(e.target.value)}
 								required
 							/>
-
-							{/* </div> */}
 							<LabelColorSelect
 								onClick={setIsLabelOptionsModalOpen}
 								selectedColor={colorBubble}
@@ -187,6 +189,7 @@ const EventModal = () => {
 						{required && (
 							<p className='text-red-400 text-sm ml-3 w-full'>Please enter a title</p>
 						)}
+
 						<div className='flex max-lg:flex-col w-full justify-between items-center mb-2'>
 							<input
 								type='date'
@@ -195,15 +198,27 @@ const EventModal = () => {
 								value={date}
 								onChange={(e) => setDate(e.target.value)}
 							/>
-							<input
-								type='time'
-								className='w-full ml-1 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
-								placeholder='Time'
-								value={time}
-								onChange={(e) => setTime(e.target.value)}
-							/>
+							{!allDay && (
+								<input
+									type='time'
+									className='w-full ml-1 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
+									placeholder='Time'
+									value={time}
+									onChange={(e) => setTime(e.target.value)}
+								/>
+							)}
 						</div>
-
+						<div className='w-full m-3 pl-3 flex items-center'>
+							<input
+								type='checkbox'
+								checked={allDay}
+								id='allDay'
+								onChange={() => setAllDay((prev) => !prev)}
+							/>
+							<label htmlFor='allDay' className='ml-2 text-gray-600'>
+								All day
+							</label>
+						</div>
 						<textarea
 							className='w-full mb-2 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
 							placeholder='Description'
