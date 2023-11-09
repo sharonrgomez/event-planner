@@ -1,8 +1,20 @@
 import Head from 'next/head'
 import App from '../App'
-import {GlobalProvider} from '../context'
+import {AuthContext, AuthContextProvider, GlobalProvider} from '../context'
+import {useRouter} from 'next/router'
+import {useContext, useEffect} from 'react'
 
 export const Home = () => {
+	const {user} = useContext(AuthContext) as any
+	const router = useRouter()
+
+	useEffect(() => {
+		if (user == null) {
+			console.log('not logged in')
+			// router.push('/signup')
+		}
+	}, [user])
+
 	return (
 		<div>
 			<Head>
@@ -11,9 +23,11 @@ export const Home = () => {
 			</Head>
 
 			<main>
-				<GlobalProvider>
-					<App />
-				</GlobalProvider>
+				<AuthContextProvider>
+					<GlobalProvider>
+						<App />
+					</GlobalProvider>
+				</AuthContextProvider>
 			</main>
 		</div>
 	)
