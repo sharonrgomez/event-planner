@@ -58,6 +58,7 @@ const EventModal = () => {
 		setEventColor(color)
 		setIsLabelOptionsModalOpen(false)
 	}
+
 	useEffect(() => {
 		if (title) {
 			setRequired(false)

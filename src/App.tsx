@@ -5,12 +5,19 @@ import {
 	EventModal,
 	DeleteConfirmationModal,
 	Month,
+	AuthDialog,
 } from './components'
-import {GlobalContext} from './context'
+import {AuthContext, GlobalContext} from './context'
 
 const App = () => {
-	const {isEventModalOpen, isDeleteConfirmationModalOpen, month} =
-		useContext(GlobalContext)
+	const {
+		isEventModalOpen,
+		isDeleteConfirmationModalOpen,
+		month,
+		isAuthDialogOpen,
+	} = useContext(GlobalContext)
+	const {isLoggingIn} = useContext(AuthContext)
+
 	const [currentMonth, setCurrentMonth] = useState(getMonth())
 
 	useEffect(() => {
@@ -27,6 +34,7 @@ const App = () => {
 
 			{isEventModalOpen && <EventModal />}
 			{isDeleteConfirmationModalOpen && <DeleteConfirmationModal />}
+			{isAuthDialogOpen && <AuthDialog isLoggingIn={isLoggingIn} />}
 		</div>
 	)
 }

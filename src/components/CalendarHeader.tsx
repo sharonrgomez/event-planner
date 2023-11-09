@@ -3,14 +3,19 @@ import React, {useContext} from 'react'
 
 import {AuthContext, GlobalContext} from '../context'
 import logOut from '../firebase/auth/logout'
-import {useRouter} from 'next/router'
 
 export const CalendarHeader = () => {
-	const {month, setMonth, setIsEventModalOpen, setSelectedDay} =
-		useContext(GlobalContext)
-	const {user} = useContext(AuthContext) as any
+	const {
+		month,
+		setMonth,
+		setIsEventModalOpen,
+		setSelectedDay,
+		setIsAuthDialogOpen,
+	} = useContext(GlobalContext)
 
-	const router = useRouter()
+	const {setIsLoggingIn} = useContext(AuthContext)
+
+	const {user} = useContext(AuthContext)
 
 	const handleClickPrev = () => {
 		setMonth(month - 1)
@@ -107,15 +112,32 @@ export const CalendarHeader = () => {
 				{user ? (
 					<span className='text-gray-600'>
 						Signed in as:{' '}
-						<span className='font-bold text-gray-700'>{user?.email}</span>
+						<span className='font-bold text-gray-700 mr-2'>{user?.email}</span>
 						<button className='text-gray-600' onClick={async () => await logOut()}>
 							Log out
 						</button>
 					</span>
 				) : (
-					<button className='text-gray-600' onClick={() => router.push('/signup')}>
-						Sign up
-					</button>
+					<>
+						<button
+							className='text-gray-600 hover:text-gray-900 mr-3'
+							onClick={() => {
+								setIsLoggingIn(false)
+								setIsAuthDialogOpen(true)
+							}}
+						>
+							Sign up
+						</button>
+						<button
+							className='text-gray-600 hover:text-gray-900'
+							onClick={() => {
+								setIsLoggingIn(true)
+								setIsAuthDialogOpen(true)
+							}}
+						>
+							Log in
+						</button>
+					</>
 				)}
 			</div>
 		</header>

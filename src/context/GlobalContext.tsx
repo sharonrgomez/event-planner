@@ -47,6 +47,10 @@ export const GlobalContext = createContext<{
 	setIsDeleteConfirmationModalOpen: Dispatch<SetStateAction<boolean>>
 	isLabelOptionsModalOpen: boolean
 	setIsLabelOptionsModalOpen: Dispatch<SetStateAction<boolean>>
+	isSnackbarOpen: boolean
+	setIsSnackbarOpen: Dispatch<SetStateAction<boolean>>
+	isAuthDialogOpen: boolean
+	setIsAuthDialogOpen: Dispatch<SetStateAction<boolean>>
 }>({
 	month: dayjs().month(),
 	setMonth: (m: number) => {},
@@ -64,6 +68,10 @@ export const GlobalContext = createContext<{
 	setIsDeleteConfirmationModalOpen: (o: boolean) => {},
 	isLabelOptionsModalOpen: false,
 	setIsLabelOptionsModalOpen: (o: boolean) => {},
+	isSnackbarOpen: false,
+	setIsSnackbarOpen: (o: boolean) => {},
+	isAuthDialogOpen: false,
+	setIsAuthDialogOpen: (o: boolean) => {},
 })
 
 const GlobalProvider = ({children}: {children: React.ReactNode}) => {
@@ -80,10 +88,16 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 	const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
 		useState(false)
 	const [isLabelOptionsModalOpen, setIsLabelOptionsModalOpen] = useState(false)
+	const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
+	const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false)
 
 	useEffect(() => {
 		if (!isEventModalOpen) setIsLabelOptionsModalOpen(false)
 	}, [isEventModalOpen])
+
+	useEffect(() => {
+		if (!isAuthDialogOpen) setIsSnackbarOpen(false)
+	}, [isAuthDialogOpen])
 
 	useEffect(() => {
 		isServerSide
@@ -110,6 +124,10 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 				setIsDeleteConfirmationModalOpen,
 				isLabelOptionsModalOpen,
 				setIsLabelOptionsModalOpen,
+				isSnackbarOpen,
+				setIsSnackbarOpen,
+				isAuthDialogOpen,
+				setIsAuthDialogOpen,
 			}}
 		>
 			{children}
