@@ -1,19 +1,21 @@
 import Head from 'next/head'
 import App from '../App'
-import {AuthContext, AuthContextProvider, GlobalProvider} from '../context'
+import {AuthContextProvider, GlobalProvider} from '../context'
 import {useRouter} from 'next/router'
-import {useContext, useEffect} from 'react'
+import {getAuth, onAuthStateChanged} from 'firebase/auth'
+import firebase_app from '../firebase/config'
 
 export const Home = () => {
-	const {user} = useContext(AuthContext) as any
-	const router = useRouter()
+	// const router = useRouter()
+	// const auth = getAuth(firebase_app)
 
-	useEffect(() => {
-		if (user == null) {
-			console.log('not logged in')
-			// router.push('/signup')
-		}
-	}, [user])
+	// onAuthStateChanged(auth, (user) => {
+	// 	if (user) {
+	// 		router.push('/')
+	// 	} else {
+	// 		router.push('/signup')
+	// 	}
+	// })
 
 	return (
 		<div>

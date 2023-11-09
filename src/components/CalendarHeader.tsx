@@ -1,11 +1,16 @@
 import dayjs from 'dayjs'
 import React, {useContext} from 'react'
 
-import {GlobalContext} from '../context'
+import {AuthContext, GlobalContext} from '../context'
+import logOut from '../firebase/auth/logout'
+import {useRouter} from 'next/router'
 
 export const CalendarHeader = () => {
 	const {month, setMonth, setIsEventModalOpen, setSelectedDay} =
 		useContext(GlobalContext)
+	const {user} = useContext(AuthContext) as any
+
+	const router = useRouter()
 
 	const handleClickPrev = () => {
 		setMonth(month - 1)
@@ -26,39 +31,12 @@ export const CalendarHeader = () => {
 
 	return (
 		<header
-			className='px-4 py-2 flex items-center justify-between flex-wrap'
+			className='px-4 py-2 flex justify-between flex-wrap'
 			data-testid='calendar-header'
 		>
-			<h1
-				className='mr-4 my-2 text-xl text-gray-500 fond-bold'
-				data-testid='calendar-header-heading'
-			>
-				{dayjs(new Date(dayjs().year(), month)).format('MMMM YYYY').toUpperCase()}
-			</h1>
-			<div className='flex'>
+			<div className='flex flex-row items-center'>
 				<button
-					className='rounded-full py-1 px-4 mr-3 bg-green-100 hover:bg-green-200'
-					onClick={handleOpenModal}
-					data-testid='calendar-header-add-event-button'
-				>
-					<svg
-						xmlns='http://www.w3.org/2000/svg'
-						viewBox='0 0 20 20'
-						fill='currentColor'
-						className='w-5 h-5 text-gray-600 hover:text-gray-800'
-					>
-						<path d='M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z' />
-					</svg>
-				</button>
-				<button
-					className='rounded-full py-1 px-4 mr-3 bg-gray-100 hover:bg-gray-200 text-gray-600 hover:text-gray-800'
-					onClick={handleClickToday}
-					data-testid='calendar-header-today-button'
-				>
-					Today
-				</button>
-				<button
-					className='rounded-full py-1 px-4 mr-1 bg-gray-100 hover:bg-gray-200'
+					className='rounded-full py-1 px-2 mr-1 bg-gray-100 hover:bg-gray-200'
 					onClick={handleClickPrev}
 					data-testid='calendar-header-prev-button'
 				>
@@ -75,8 +53,9 @@ export const CalendarHeader = () => {
 						/>
 					</svg>
 				</button>
+
 				<button
-					className='rounded-full py-1 px-4 bg-gray-100 hover:bg-gray-200'
+					className='rounded-full py-1 px-2 mr-2 bg-gray-100 hover:bg-gray-200'
 					onClick={handleClickNext}
 					data-testid='calendar-header-next-button'
 				>
@@ -93,6 +72,51 @@ export const CalendarHeader = () => {
 						/>
 					</svg>
 				</button>
+
+				<button
+					className='rounded-full py-1 px-3 mr-2 bg-gray-100 hover:bg-gray-300 text-gray-600 hover:text-gray-700 text-md'
+					onClick={handleClickToday}
+					data-testid='calendar-header-today-button'
+				>
+					TODAY
+				</button>
+
+				<button
+					className='rounded-full py-1 px-2 mr-3 bg-green-100 hover:bg-green-200'
+					onClick={handleOpenModal}
+					data-testid='calendar-header-add-event-button'
+				>
+					<svg
+						xmlns='http://www.w3.org/2000/svg'
+						viewBox='0 0 20 20'
+						fill='currentColor'
+						className='w-5 h-5 text-gray-600 hover:text-gray-800'
+					>
+						<path d='M10.75 4.75a.75.75 0 00-1.5 0v4.5h-4.5a.75.75 0 000 1.5h4.5v4.5a.75.75 0 001.5 0v-4.5h4.5a.75.75 0 000-1.5h-4.5v-4.5z' />
+					</svg>
+				</button>
+
+				<h1
+					className='my-2 text-xl text-gray-600 fond-bold'
+					data-testid='calendar-header-heading'
+				>
+					{dayjs(new Date(dayjs().year(), month)).format('MMMM YYYY').toUpperCase()}
+				</h1>
+			</div>
+			<div className='flex flex-row items-center'>
+				{user ? (
+					<span className='text-gray-600'>
+						Signed in as:{' '}
+						<span className='font-bold text-gray-700'>{user?.email}</span>
+						<button className='text-gray-600' onClick={async () => await logOut()}>
+							Log out
+						</button>
+					</span>
+				) : (
+					<button className='text-gray-600' onClick={() => router.push('/signup')}>
+						Sign up
+					</button>
+				)}
 			</div>
 		</header>
 	)
