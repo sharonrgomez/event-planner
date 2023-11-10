@@ -1,7 +1,7 @@
 import dayjs from 'dayjs'
 import React, {useContext} from 'react'
 
-import {AuthContext, GlobalContext} from '../context'
+import {AuthContext, GlobalContext, SnackbarContext} from '../context'
 import logOut from '../firebase/auth/logout'
 
 export const CalendarHeader = () => {
@@ -11,11 +11,11 @@ export const CalendarHeader = () => {
 		setIsEventModalOpen,
 		setSelectedDay,
 		setIsAuthDialogOpen,
+		setIsSnackbarOpen,
 	} = useContext(GlobalContext)
 
-	const {setIsLoggingIn} = useContext(AuthContext)
-
-	const {user} = useContext(AuthContext)
+	const {user, setIsLoggingIn} = useContext(AuthContext)
+	const {setMessage} = useContext(SnackbarContext)
 
 	const handleClickPrev = () => {
 		setMonth(month - 1)
@@ -32,6 +32,24 @@ export const CalendarHeader = () => {
 	const handleOpenModal = () => {
 		setIsEventModalOpen(true)
 		setSelectedDay(dayjs())
+	}
+
+	const handleLogOut = async () => {
+		const {error} = await logOut()
+
+		if (error) {
+			setMessage(`Error logging out: ${error.code}`)
+			setIsSnackbarOpen(true)
+		} else {
+			setMessage('Logged out successfully')
+			setIsSnackbarOpen(true)
+
+			setTimeout(() => {
+				setIsSnackbarOpen(false)
+			}, 3000)
+		}
+
+		return
 	}
 
 	return (
@@ -110,10 +128,13 @@ export const CalendarHeader = () => {
 			</div>
 			<div className='flex flex-row items-center'>
 				{user ? (
-					<span className='text-gray-600'>
+					<span className='text-gray-700'>
 						Signed in as:{' '}
 						<span className='font-bold text-gray-700 mr-2'>{user?.email}</span>
-						<button className='text-gray-600' onClick={async () => await logOut()}>
+						<button
+							className='text-gray-500 hover:text-gray-800'
+							onClick={handleLogOut}
+						>
 							Log out
 						</button>
 					</span>

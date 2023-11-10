@@ -96,10 +96,6 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 	}, [isEventModalOpen])
 
 	useEffect(() => {
-		if (!isAuthDialogOpen) setIsSnackbarOpen(false)
-	}, [isAuthDialogOpen])
-
-	useEffect(() => {
 		isServerSide
 			? undefined
 			: localStorage.setItem('savedEvents', JSON.stringify(savedEvents))

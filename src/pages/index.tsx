@@ -1,6 +1,7 @@
 import Head from 'next/head'
 import App from '../App'
-import {AuthContextProvider, GlobalProvider} from '../context'
+import {AuthProvider, GlobalProvider} from '../context'
+import SnackbarProvider from '../context/SnackbarContext'
 
 export const Home = () => (
 	<div>
@@ -10,11 +11,13 @@ export const Home = () => (
 		</Head>
 
 		<main>
-			<AuthContextProvider>
-				<GlobalProvider>
-					<App />
-				</GlobalProvider>
-			</AuthContextProvider>
+			<AuthProvider>
+				<SnackbarProvider>
+					<GlobalProvider>
+						<App />
+					</GlobalProvider>
+				</SnackbarProvider>
+			</AuthProvider>
 		</main>
 	</div>
 )

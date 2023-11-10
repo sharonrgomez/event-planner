@@ -10,9 +10,8 @@ export const AuthContext = createContext({
 	setIsLoggingIn: (b: boolean) => {},
 })
 
-const AuthContextProvider = ({children}) => {
+const AuthProvider = ({children}) => {
 	const [user, setUser] = useState<User>(null)
-	const [loading, setLoading] = useState(true)
 	const [isLoggingIn, setIsLoggingIn] = useState(false)
 
 	useEffect(() => {
@@ -22,7 +21,6 @@ const AuthContextProvider = ({children}) => {
 			} else {
 				setUser(null)
 			}
-			setLoading(false)
 		})
 
 		return () => unsubscribe()
@@ -36,9 +34,9 @@ const AuthContextProvider = ({children}) => {
 				setIsLoggingIn,
 			}}
 		>
-			{loading ? <div>Loading...</div> : children}
+			{children}
 		</AuthContext.Provider>
 	)
 }
 
-export default AuthContextProvider
+export default AuthProvider
