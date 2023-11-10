@@ -3,6 +3,7 @@ import React, {useContext} from 'react'
 
 import {AuthContext, GlobalContext, SnackbarContext} from '../context'
 import logOut from '../firebase/auth/logout'
+import {getErrorMessage} from '../utils/helpers'
 
 export const CalendarHeader = () => {
 	const {
@@ -38,7 +39,7 @@ export const CalendarHeader = () => {
 		const {error} = await logOut()
 
 		if (error) {
-			setMessage(`Error logging out: ${error.code}`)
+			setMessage(getErrorMessage(error.code))
 			setIsSnackbarOpen(true)
 		} else {
 			setMessage('Logged out successfully')

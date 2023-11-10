@@ -37,3 +37,18 @@ export const getMonth = (month = dayjs().month()): dayjs.Dayjs[][] => {
 
 	return daysMatrix
 }
+
+const errorMessages = {
+	'auth/email-already-in-use': 'That email address is already in use',
+	'auth/invalid-email': 'Email must be in the format: name@example.com',
+	'auth/weak-password': 'Password must contain at least 6 characters',
+	'auth/invalid-login-credentials': 'Email or password is incorrect',
+}
+
+export const getErrorMessage = (key: string) => {
+	if (errorMessages.hasOwnProperty(key)) {
+		return errorMessages[key]
+	} else {
+		return 'Unknown error occurred'
+	}
+}

@@ -4,6 +4,7 @@ import {GlobalContext, SnackbarContext} from '../context'
 import {Button} from '.'
 import logIn from '../firebase/auth/login'
 import signUp from '../firebase/auth/signup'
+import {getErrorMessage} from '../utils/helpers'
 
 type AuthDialogProps = {
 	isLoggingIn?: boolean
@@ -54,9 +55,7 @@ const AuthDialog = (props: AuthDialogProps) => {
 
 		if (error) {
 			setError(true)
-			setMessage(
-				`Error ${isLoggingIn ? 'logging in' : 'creating account'}: ${error.code}`,
-			)
+			setMessage(getErrorMessage(error.code))
 			setIsSnackbarOpen(true)
 		} else if (result) {
 			setError(false)
