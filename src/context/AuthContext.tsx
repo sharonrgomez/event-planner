@@ -1,10 +1,20 @@
-import React, {createContext, useEffect, useState} from 'react'
+import React, {
+	Dispatch,
+	SetStateAction,
+	createContext,
+	useEffect,
+	useState,
+} from 'react'
 import {onAuthStateChanged, getAuth, User} from 'firebase/auth'
 import firebase_app from '../firebase/config'
 
 const auth = getAuth(firebase_app)
 
-export const AuthContext = createContext({
+export const AuthContext = createContext<{
+	user: User
+	isLoggingIn: boolean
+	setIsLoggingIn: Dispatch<SetStateAction<boolean>>
+}>({
 	user: null,
 	isLoggingIn: false,
 	setIsLoggingIn: (b: boolean) => {},

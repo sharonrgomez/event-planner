@@ -88,7 +88,7 @@ const AuthDialog = (props: AuthDialogProps) => {
 					<p className='text-sm px-5 py-3 text-gray-600'>
 						{isLoggingIn
 							? 'Log into an existing account.'
-							: 'Create an account to save your events.'}
+							: 'Create an account to save your events securely and access them from any device.'}
 					</p>
 
 					<div className='flex flex-col items-center px-5 pt-2 pb-1 w-full mb-2'>

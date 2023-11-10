@@ -93,7 +93,7 @@ const Day = (props: DayProps) => {
 							className='px-1 mx-1 rounded mb-1 hover:bg-gray-100'
 							data-testid='day-more-events-button'
 						>
-							<p className='text-sm text-center text-gray-600 truncate text-xs'>
+							<p className='text-sm text-center text-gray-600 truncate'>
 								{`+${dayEvents.length - 2} more`}
 							</p>
 						</div>

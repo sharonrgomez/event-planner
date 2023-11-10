@@ -1,5 +1,5 @@
 import {useCallback, useContext, useEffect, useRef, useState} from 'react'
-import {GlobalContext} from '../context'
+import {AuthContext, GlobalContext} from '../context'
 import dayjs from 'dayjs'
 import {Button, LabelColorSelect} from '.'
 import {v4 as uuid} from 'uuid'
@@ -26,6 +26,7 @@ const EventModal = () => {
 		setIsDayEventsModalOpen,
 		setIsLabelOptionsModalOpen,
 	} = useContext(GlobalContext)
+	const {user} = useContext(AuthContext)
 
 	const handleCloseModal = () => {
 		setIsEventModalOpen(false)
@@ -227,6 +228,12 @@ const EventModal = () => {
 							value={description}
 							onChange={(e) => setDescription(e.target.value)}
 						/>
+						{!user && !selectedEvent && (
+							<p className='text-red-400 text-sm py-1'>
+								Note: This event will only be saved locally. Create an account to store
+								it securely and access it from any device.
+							</p>
+						)}
 					</div>
 
 					<div className='flex justify-end items-center w-full bg-gray-50 px-5 py-4'>
