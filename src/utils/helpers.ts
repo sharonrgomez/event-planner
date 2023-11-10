@@ -3,13 +3,24 @@ import {EventType} from '../components/EventModal'
 
 export const getSortedEvents = (events: EventType[]) => {
 	return events.sort((a, b) => {
-		const aTime = a.time.split(':')
-		const bTime = b.time.split(':')
+		const aIsAllDay = a.allDay
+		const bIsAllDay = b.allDay
 
-		const aInMinutes = parseInt(aTime[0]) * 60 + parseInt(aTime[1])
-		const bInMinutes = parseInt(bTime[0]) * 60 + parseInt(bTime[1])
+		if (aIsAllDay !== bIsAllDay) {
+			return aIsAllDay ? -1 : 1
+		}
 
-		return aInMinutes - bInMinutes
+		if (!aIsAllDay) {
+			const aTime = a.time.split(':')
+			const bTime = b.time.split(':')
+
+			const aInMinutes = parseInt(aTime[0]) * 60 + parseInt(aTime[1])
+			const bInMinutes = parseInt(bTime[0]) * 60 + parseInt(bTime[1])
+
+			return aInMinutes - bInMinutes
+		}
+
+		return 0
 	})
 }
 
