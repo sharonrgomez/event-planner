@@ -3,31 +3,36 @@ import {
 	createContext,
 	Dispatch,
 	SetStateAction,
+	useContext,
 	useEffect,
 	useReducer,
 	useState,
 } from 'react'
 import {EventType} from '../components/EventModal'
+import {AuthContext} from './AuthContext'
+import {collection, doc, getDoc, setDoc} from 'firebase/firestore'
+import {database} from '../firebase/config'
 
 const isServerSide = typeof window === 'undefined'
 
-const savedEventsReducer = (state, {type, payload}) => {
-	switch (type) {
-		case 'push':
-			return [...state, payload]
-		case 'update':
-			return state.map((event) => (event.id === payload.id ? payload : event))
-		case 'delete':
-			return state.filter((event) => event.id !== payload.id)
-		default:
-			throw new Error()
+export const setFirebaseEvents = async (user, savedEvents) => {
+	if (user) {
+		await setDoc(doc(collection(database, 'users'), user.uid), {
+			events: JSON.stringify(savedEvents),
+		})
 	}
 }
 
-const initEvents = () => {
-	const storageEvents = isServerSide ? '' : localStorage.getItem('savedEvents')
-	const parsedEvents = storageEvents ? JSON.parse(storageEvents) : []
-	return parsedEvents
+const getFirebaseEvents = async (user) => {
+	if (user) {
+		const docSnap = await getDoc(doc(database, 'users', user.uid))
+
+		if (docSnap.exists()) {
+			return docSnap.data().events
+		} else {
+			console.log('No document found')
+		}
+	}
 }
 
 export const GlobalContext = createContext<{
@@ -42,7 +47,7 @@ export const GlobalContext = createContext<{
 	isDayEventsModalOpen: boolean
 	setIsDayEventsModalOpen: Dispatch<SetStateAction<boolean>>
 	savedEvents: EventType[]
-	dispatchSaveEvent: ({type, payload}) => void
+	setSavedEvents: Dispatch<SetStateAction<EventType[]>>
 	isDeleteConfirmationModalOpen: boolean
 	setIsDeleteConfirmationModalOpen: Dispatch<SetStateAction<boolean>>
 	isLabelOptionsModalOpen: boolean
@@ -63,7 +68,7 @@ export const GlobalContext = createContext<{
 	isDayEventsModalOpen: false,
 	setIsDayEventsModalOpen: (o: boolean) => {},
 	savedEvents: [],
-	dispatchSaveEvent: ({type, payload}) => {},
+	setSavedEvents: (e: EventType[]) => {},
 	isDeleteConfirmationModalOpen: false,
 	setIsDeleteConfirmationModalOpen: (o: boolean) => {},
 	isLabelOptionsModalOpen: false,
@@ -80,26 +85,30 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 	const [selectedEvent, setSelectedEvent] = useState(null)
 	const [selectedDay, setSelectedDay] = useState(null)
 	const [isDayEventsModalOpen, setIsDayEventsModalOpen] = useState(false)
-	const [savedEvents, dispatchSaveEvent] = useReducer(
-		savedEventsReducer,
-		[],
-		initEvents,
-	)
 	const [isDeleteConfirmationModalOpen, setIsDeleteConfirmationModalOpen] =
 		useState(false)
 	const [isLabelOptionsModalOpen, setIsLabelOptionsModalOpen] = useState(false)
 	const [isSnackbarOpen, setIsSnackbarOpen] = useState(false)
 	const [isAuthDialogOpen, setIsAuthDialogOpen] = useState(false)
 
+	const {user} = useContext(AuthContext)
+
+	const [savedEvents, setSavedEvents] = useState([])
+
+	useEffect(() => {
+		if (user) {
+			const getEvents = async () => {
+				const storageEvents = isServerSide ? '' : await getFirebaseEvents(user)
+				const parsedEvents = storageEvents ? JSON.parse(storageEvents) : []
+				setSavedEvents(parsedEvents)
+			}
+			getEvents()
+		}
+	}, [user])
+
 	useEffect(() => {
 		if (!isEventModalOpen) setIsLabelOptionsModalOpen(false)
 	}, [isEventModalOpen])
-
-	useEffect(() => {
-		isServerSide
-			? undefined
-			: localStorage.setItem('savedEvents', JSON.stringify(savedEvents))
-	}, [savedEvents])
 
 	return (
 		<GlobalContext.Provider
@@ -115,7 +124,7 @@ const GlobalProvider = ({children}: {children: React.ReactNode}) => {
 				isDayEventsModalOpen,
 				setIsDayEventsModalOpen,
 				savedEvents,
-				dispatchSaveEvent,
+				setSavedEvents,
 				isDeleteConfirmationModalOpen,
 				setIsDeleteConfirmationModalOpen,
 				isLabelOptionsModalOpen,

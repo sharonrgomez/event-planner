@@ -1,6 +1,9 @@
+import {setDoc, doc, collection} from 'firebase/firestore'
 import {Button} from '.'
-import {GlobalContext} from '../context'
+import {AuthContext, GlobalContext} from '../context'
 import {useContext} from 'react'
+import {database} from '../firebase/config'
+import {setFirebaseEvents} from '../context/GlobalContext'
 
 const DeleteConfirmationModal = () => {
 	const {
@@ -8,11 +11,19 @@ const DeleteConfirmationModal = () => {
 		setIsEventModalOpen,
 		selectedEvent,
 		setSelectedEvent,
-		dispatchSaveEvent,
+		savedEvents,
+		setSavedEvents,
 	} = useContext(GlobalContext)
+	const {user} = useContext(AuthContext)
 
 	const handleClickDelete = () => {
-		dispatchSaveEvent({type: 'delete', payload: selectedEvent})
+		const updatedEvents = savedEvents.filter(
+			(event) => event.id !== selectedEvent.id,
+		)
+
+		setSavedEvents(updatedEvents)
+		setFirebaseEvents(user, updatedEvents)
+
 		setIsDeleteConfirmationModalOpen(false)
 		setSelectedEvent(null)
 	}

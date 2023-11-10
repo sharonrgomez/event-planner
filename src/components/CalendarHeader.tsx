@@ -13,6 +13,7 @@ export const CalendarHeader = () => {
 		setSelectedDay,
 		setIsAuthDialogOpen,
 		setIsSnackbarOpen,
+		setSavedEvents,
 	} = useContext(GlobalContext)
 
 	const {user, setIsLoggingIn} = useContext(AuthContext)
@@ -37,6 +38,8 @@ export const CalendarHeader = () => {
 
 	const handleLogOut = async () => {
 		const {error} = await logOut()
+
+		setSavedEvents([])
 
 		if (error) {
 			setMessage(getErrorMessage(error.code))

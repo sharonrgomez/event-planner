@@ -4,6 +4,9 @@ import dayjs from 'dayjs'
 import {Button, LabelColorSelect} from '.'
 import {v4 as uuid} from 'uuid'
 import {colorOptions} from './LabelOptionsModal'
+import {setDoc, doc, collection} from 'firebase/firestore'
+import {database} from '../firebase/config'
+import {setFirebaseEvents} from '../context/GlobalContext'
 
 export type EventType = {
 	id: string
@@ -21,7 +24,8 @@ const EventModal = () => {
 		selectedEvent,
 		setSelectedEvent,
 		selectedDay,
-		dispatchSaveEvent,
+		savedEvents,
+		setSavedEvents,
 		setIsDeleteConfirmationModalOpen,
 		setIsDayEventsModalOpen,
 		setIsLabelOptionsModalOpen,
@@ -66,7 +70,7 @@ const EventModal = () => {
 		}
 	}, [title])
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async (e) => {
 		e.preventDefault()
 
 		if (!title) {
@@ -74,7 +78,7 @@ const EventModal = () => {
 			return
 		}
 
-		const payload = {
+		const newEvent = {
 			title,
 			description,
 			date,
@@ -85,9 +89,21 @@ const EventModal = () => {
 		}
 
 		if (selectedEvent) {
-			dispatchSaveEvent({type: 'update', payload})
+			const updatedEvents = savedEvents.map((event) => {
+				if (event.id === selectedEvent.id) {
+					return newEvent
+				} else {
+					return event
+				}
+			})
+
+			setSavedEvents(updatedEvents)
+			setFirebaseEvents(user, updatedEvents)
 		} else {
-			dispatchSaveEvent({type: 'push', payload})
+			const updatedEvents = [...savedEvents, newEvent]
+
+			setSavedEvents(updatedEvents)
+			setFirebaseEvents(user, updatedEvents)
 		}
 
 		setIsEventModalOpen(false)
