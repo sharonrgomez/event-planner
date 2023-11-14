@@ -1,12 +1,11 @@
-import {useCallback, useContext, useEffect, useRef, useState} from 'react'
+import {useContext, useEffect, useRef, useState} from 'react'
 import {AuthContext, GlobalContext} from '../context'
 import dayjs from 'dayjs'
 import {Button, LabelColorSelect} from '.'
 import {v4 as uuid} from 'uuid'
 import {colorOptions} from './LabelOptionsModal'
-import {setDoc, doc, collection} from 'firebase/firestore'
-import {database} from '../firebase/config'
 import {setFirebaseEvents} from '../context/GlobalContext'
+import useClickOutside from '../hooks/useClickOutside'
 
 export type EventType = {
 	id: string
@@ -125,23 +124,7 @@ const EventModal = () => {
 	}, [selectedEvent])
 
 	const ref = useRef<HTMLDivElement>(null)
-
-	const handleClickOutside = useCallback(
-		(e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) {
-				setIsEventModalOpen(false)
-				setSelectedEvent(null)
-			}
-		},
-		[setIsEventModalOpen, setSelectedEvent],
-	)
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside)
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside)
-		}
-	}, [handleClickOutside])
+	useClickOutside(ref, handleCloseModal)
 
 	return (
 		<div

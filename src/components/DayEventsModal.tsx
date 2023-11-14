@@ -1,8 +1,10 @@
-import {Fragment, useCallback, useContext, useEffect, useRef} from 'react'
+import {Fragment, useContext, useRef} from 'react'
 import {GlobalContext} from '../context'
 import {EventType} from './EventModal'
 import {EventLabel} from '.'
 import {getSortedEvents} from '../utils/helpers'
+
+import useClickOutside from '../hooks/useClickOutside'
 
 type DayEventsModalProps = {
 	events: EventType[]
@@ -20,6 +22,8 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 
 	const handleCloseModal = () => {
 		setIsDayEventsModalOpen(false)
+		setIsEventModalOpen(false)
+		setSelectedEvent(null)
 	}
 
 	const handleClickEvent = (event: EventType) => {
@@ -30,22 +34,7 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 	const sortedEvents = getSortedEvents(events)
 
 	const ref = useRef<HTMLDivElement>(null)
-
-	const handleClickOutside = useCallback(
-		(e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) {
-				setIsDayEventsModalOpen(false)
-			}
-		},
-		[setIsDayEventsModalOpen],
-	)
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside)
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside)
-		}
-	}, [handleClickOutside])
+	useClickOutside(ref, handleCloseModal)
 
 	return (
 		<div

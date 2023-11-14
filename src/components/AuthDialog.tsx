@@ -1,10 +1,11 @@
 'use client'
-import {useContext, useEffect, useState} from 'react'
+import {useContext, useEffect, useRef, useState} from 'react'
 import {GlobalContext, SnackbarContext} from '../context'
 import {Button} from '.'
 import logIn from '../firebase/auth/login'
 import signUp from '../firebase/auth/signup'
 import {getErrorMessage} from '../utils/helpers'
+import useClickOutside from '../hooks/useClickOutside'
 
 type AuthDialogProps = {
 	isLoggingIn?: boolean
@@ -88,12 +89,18 @@ const AuthDialog = (props: AuthDialogProps) => {
 		return
 	}
 
+	const ref = useRef<HTMLDivElement>(null)
+	useClickOutside(ref, handleCloseModal)
+
 	return (
 		<div
 			className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'
 			data-testid='auth-dialog'
 		>
-			<div className='bg-white rounded-lg shadow-2xl max-sm:mx-5 max-sm:w-full sm:max-md:w-1/2 sm:max-2xl:w-1/3'>
+			<div
+				className='bg-white rounded-lg shadow-2xl max-sm:mx-5 max-sm:w-full sm:max-md:w-1/2 sm:max-2xl:w-1/3'
+				ref={ref}
+			>
 				<form onSubmit={handleSubmit}>
 					<div
 						className='flex justify-between items-center border-b border-gray-100 px-5 py-4 text-gray-600 font-medium text-xl'

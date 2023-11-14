@@ -1,5 +1,6 @@
-import {useCallback, useContext, useEffect, useRef, useState} from 'react'
+import {useContext, useRef, useState} from 'react'
 import {GlobalContext} from '../context'
+import useClickOutside from '../hooks/useClickOutside'
 
 type LabelOptionsModalProps = {
 	onSelectColor: (color: string) => void
@@ -41,22 +42,7 @@ const LabelOptionsModal = (props: LabelOptionsModalProps) => {
 	const [hoveredColor, setHoveredColor] = useState<string | undefined>()
 
 	const ref = useRef<HTMLDivElement>(null)
-
-	const handleClickOutside = useCallback(
-		(e: MouseEvent) => {
-			if (ref.current && !ref.current.contains(e.target as Node)) {
-				setIsLabelOptionsModalOpen(false)
-			}
-		},
-		[setIsLabelOptionsModalOpen],
-	)
-
-	useEffect(() => {
-		document.addEventListener('mousedown', handleClickOutside)
-		return () => {
-			document.removeEventListener('mousedown', handleClickOutside)
-		}
-	}, [handleClickOutside])
+	useClickOutside(ref, () => setIsLabelOptionsModalOpen(false))
 
 	return (
 		<div
