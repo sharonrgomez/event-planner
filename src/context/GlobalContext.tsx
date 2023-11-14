@@ -13,7 +13,7 @@ import {AuthContext} from './AuthContext'
 import {collection, doc, getDoc, setDoc} from 'firebase/firestore'
 import {database} from '../firebase/config'
 
-const isServerSide = typeof window === 'undefined'
+export const isServerSide = typeof window === 'undefined'
 
 export const setFirebaseEvents = async (user, savedEvents) => {
 	if (user) {
