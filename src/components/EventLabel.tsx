@@ -16,13 +16,19 @@ const EventLabel = (props: EventLabelProps) => {
 			onClick={() => clickEventHandler(event)}
 			style={{
 				background: event.labelColor,
+				color:
+					event.labelColor === '#8D7772' ||
+					event.labelColor === '#988580' ||
+					event.labelColor === '#A2928E'
+						? '#fff'
+						: '#4b5563',
 			}}
 			className={`px-1 mx-1 rounded mb-1 cursor-pointer items-center ${
 				isFullWidth ? 'w-full' : ''
 			}`}
 			data-testid={testId}
 		>
-			<p className='text-sm text-gray-600 truncate'>
+			<p className='text-sm truncate'>
 				<span data-testid='event-label-time'>
 					{!event.allDay ? dayjs(event.time, 'h:mm').format('h:mma') : ''}
 				</span>{' '}
