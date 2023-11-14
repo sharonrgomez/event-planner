@@ -5,7 +5,6 @@ import {
 	SetStateAction,
 	useContext,
 	useEffect,
-	useReducer,
 	useState,
 } from 'react'
 import {EventType} from '../components/EventModal'

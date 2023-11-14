@@ -4,6 +4,7 @@ import React, {useContext} from 'react'
 import {AuthContext, GlobalContext, SnackbarContext} from '../context'
 import logOut from '../firebase/auth/logout'
 import {getErrorMessage} from '../utils/helpers'
+import {isServerSide} from '../context/GlobalContext'
 
 export const CalendarHeader = () => {
 	const {
@@ -28,7 +29,9 @@ export const CalendarHeader = () => {
 	}
 
 	const handleClickToday = () => {
+		// if (!isServerSide) {
 		setMonth(dayjs().month())
+		// }
 	}
 
 	const handleOpenModal = () => {

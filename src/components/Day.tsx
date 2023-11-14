@@ -37,7 +37,7 @@ const Day = (props: DayProps) => {
 	const isDayInCurrentMonth = dayMonth === currentMonth
 
 	const getCurrentDayStyles = () => {
-		if (isServerSide) return ''
+		// if (isServerSide) return ''
 
 		if (day.format('DD-MM-YY') === dayjs().format('DD-MM-YY')) {
 			return 'bg-blue-400 text-white rounded-full w-7'
