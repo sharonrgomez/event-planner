@@ -19,8 +19,10 @@ const AuthDialog = (props: AuthDialogProps) => {
 
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
+	const [confirmPassword, setConfirmPassword] = useState('')
 	const [emailRequired, setEmailRequired] = useState(false)
 	const [passwordRequired, setPasswordRequired] = useState(false)
+	const [passwordsMatch, setPasswordsMatch] = useState(true)
 
 	useEffect(() => {
 		if (email) {
@@ -29,7 +31,10 @@ const AuthDialog = (props: AuthDialogProps) => {
 		if (password) {
 			setPasswordRequired(!password)
 		}
-	}, [email, password])
+		if (password && confirmPassword) {
+			setPasswordsMatch(password === confirmPassword)
+		}
+	}, [email, password, confirmPassword])
 
 	const handleCloseModal = () => {
 		setIsAuthDialogOpen(false)
@@ -42,6 +47,18 @@ const AuthDialog = (props: AuthDialogProps) => {
 		if (!email || !password) {
 			setEmailRequired(!email)
 			setPasswordRequired(!password)
+			return
+		}
+
+		if (!confirmPassword && !isLoggingIn) {
+			setPasswordRequired(!confirmPassword)
+			return
+		}
+
+		if (!isLoggingIn && !passwordsMatch) {
+			setError(true)
+			setMessage('Please make sure your passwords match')
+			setIsSnackbarOpen(true)
 			return
 		}
 
@@ -104,6 +121,7 @@ const AuthDialog = (props: AuthDialogProps) => {
 								Please enter an email address
 							</p>
 						)}
+
 						<input
 							type='password'
 							className='w-full p-3 mb-2 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
@@ -115,6 +133,28 @@ const AuthDialog = (props: AuthDialogProps) => {
 							<p className='text-red-400 text-sm ml-3 w-full'>
 								Please enter a password
 							</p>
+						)}
+
+						{!isLoggingIn && (
+							<>
+								<input
+									type='password'
+									className='w-full p-3 mb-2 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
+									placeholder='confirm password'
+									value={confirmPassword}
+									onChange={(e) => setConfirmPassword(e.target.value)}
+								/>
+								{passwordRequired && (
+									<p className='text-red-400 text-sm ml-3 w-full'>
+										Please enter a password
+									</p>
+								)}
+								{!passwordsMatch && (
+									<p className='text-red-400 text-sm ml-3 w-full'>
+										Passwords do not match
+									</p>
+								)}
+							</>
 						)}
 					</div>
 
