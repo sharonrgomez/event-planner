@@ -1,7 +1,7 @@
 import {useContext, useEffect, useRef, useState} from 'react'
 import {AuthContext, GlobalContext} from '../context'
 import dayjs from 'dayjs'
-import {Button, LabelColorSelect} from '.'
+import {Button, Date, DateRange, LabelColorSelect} from '.'
 import {v4 as uuid} from 'uuid'
 import {colorOptions} from './LabelOptionsModal'
 import {setFirebaseEvents} from '../context/GlobalContext'
@@ -11,10 +11,11 @@ export type EventType = {
 	id: string
 	title: string
 	description: string
-	date: string
 	time: string
 	labelColor: string
 	allDay: boolean
+	startDate: string
+	endDate: string
 }
 
 const EventModal = () => {
@@ -42,14 +43,17 @@ const EventModal = () => {
 	const [description, setDescription] = useState(
 		selectedEvent ? selectedEvent.description : '',
 	)
-	const [date, setDate] = useState(
-		selectedEvent ? selectedEvent.date : selectedDay.format('YYYY-MM-DD'),
-	)
 	const [time, setTime] = useState(
 		selectedEvent ? selectedEvent.time : dayjs().format('HH:mm'),
 	)
 	const [allDay, setAllDay] = useState(
 		selectedEvent ? selectedEvent.allDay : false,
+	)
+	const [startDate, setStartDate] = useState(
+		selectedEvent ? selectedEvent.startDate : selectedDay.format('YYYY-MM-DD'),
+	)
+	const [endDate, setEndDate] = useState(
+		selectedEvent ? selectedEvent.endDate : selectedDay.format('YYYY-MM-DD'),
 	)
 
 	const [colorBubble, setColorBubble] = useState(colorOptions[8])
@@ -80,13 +84,15 @@ const EventModal = () => {
 		const newEvent = {
 			title,
 			description,
-			date,
 			time,
 			labelColor: eventColor || colorOptions[8],
 			id: selectedEvent ? selectedEvent.id : uuid(),
 			allDay,
+			startDate,
+			endDate,
 		}
 
+		console.log('newEvent', newEvent)
 		if (selectedEvent) {
 			const updatedEvents = savedEvents.map((event) => {
 				if (event.id === selectedEvent.id) {
@@ -192,17 +198,24 @@ const EventModal = () => {
 						)}
 
 						<div className='flex max-lg:flex-col w-full justify-between items-center mb-2'>
-							<input
-								type='date'
-								className='w-full mr-2 max-lg:mr-0 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
-								placeholder='Date'
-								value={date}
-								onChange={(e) => setDate(e.target.value)}
-							/>
+							{allDay ? (
+								<DateRange
+									startValue={startDate}
+									endValue={endDate}
+									startDateChangeHandler={(e) => setStartDate(e.target.value)}
+									endDateChangeHandler={(e) => setEndDate(e.target.value)}
+								/>
+							) : (
+								<Date
+									value={startDate}
+									onChangeHandler={(e) => setStartDate(e.target.value)}
+								/>
+							)}
+
 							{!allDay && (
 								<input
 									type='time'
-									className='w-full ml-1 max-lg:ml-0 p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
+									className='w-full p-3 text-gray-700 border-0 border-b border-gray-300 focus:outline-none focus:ring-0 focus:border-blue-400 focus:bg-gray-50'
 									placeholder='Time'
 									value={time}
 									onChange={(e) => setTime(e.target.value)}

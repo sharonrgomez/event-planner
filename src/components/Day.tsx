@@ -4,7 +4,6 @@ import {GlobalContext} from '../context'
 import EventLabel from './EventLabel'
 import {EventType} from './EventModal'
 import {getSortedEvents} from '../utils/helpers'
-import {isServerSide} from '../context/GlobalContext'
 
 type DayProps = {
 	day: Dayjs
@@ -24,21 +23,45 @@ const Day = (props: DayProps) => {
 		savedEvents,
 	} = useContext(GlobalContext)
 
+	const getDatesInRange = (startDate: string, endDate: string) => {
+		const dates = []
+
+		// convert start and end date strings to dayjs objects
+		let currentDate = dayjs(startDate).startOf('day')
+		const finalDate = dayjs(endDate).startOf('day')
+
+		while (currentDate <= finalDate) {
+			// add current date (in string format) to dates array and increment by 1 day until final date
+			dates.push(currentDate.format('YYYY-MM-DD'))
+			currentDate = currentDate.add(1, 'days')
+		}
+
+		// return array of string dates
+		return dates
+	}
+
 	useEffect(() => {
-		const savedEventsForDay = savedEvents.filter((event) =>
-			day.isSame(event.date, 'day'),
-		)
+		const savedEventsForDay = savedEvents.filter((event) => {
+			// if multi-day event
+			if (event.startDate !== event.endDate) {
+				// get array of dates between start and end date
+				const datesInRange = getDatesInRange(event.startDate, event.endDate)
+				// return true if day is in array of dates
+				return datesInRange.includes(day.format('YYYY-MM-DD'))
+			} else {
+				// single-day event, return true if day is equal to event date
+				return event.startDate === day.format('YYYY-MM-DD')
+			}
+		})
 
 		setDayEvents(savedEventsForDay)
-	}, [savedEvents, day])
+	}, [day, savedEvents])
 
 	const dayMonth = dayjs().month(day.month()).format('MMMM')
 	const currentMonth = dayjs().month(month).format('MMMM')
 	const isDayInCurrentMonth = dayMonth === currentMonth
 
 	const getCurrentDayStyles = () => {
-		// if (isServerSide) return ''
-
 		if (day.format('DD-MM-YY') === dayjs().format('DD-MM-YY')) {
 			return 'bg-blue-400 text-white rounded-full w-7'
 		} else if (isDayInCurrentMonth) {

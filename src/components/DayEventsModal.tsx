@@ -22,8 +22,6 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 
 	const handleCloseModal = () => {
 		setIsDayEventsModalOpen(false)
-		setIsEventModalOpen(false)
-		setSelectedEvent(null)
 	}
 
 	const handleClickEvent = (event: EventType) => {
@@ -74,7 +72,7 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 								event={event}
 								clickEventHandler={handleClickEvent}
 								isFullWidth
-								testId='day-events-modal-event-label'
+								testID='day-events-modal-event-label'
 							/>
 						</Fragment>
 					))}

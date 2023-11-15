@@ -27,7 +27,7 @@ const Month = (props: MonthProps) => {
 			{isDayEventsModalOpen && (
 				<DayEventsModal
 					events={savedEvents.filter((event) =>
-						selectedDay.isSame(event.date, 'day'),
+						selectedDay.isSame(event.startDate, 'day'),
 					)}
 				/>
 			)}

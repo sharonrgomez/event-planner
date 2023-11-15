@@ -2,18 +2,29 @@ import dayjs from 'dayjs'
 import {EventType} from './EventModal'
 
 type EventLabelProps = {
-	event?: EventType
-	clickEventHandler?: (event: EventType) => void
+	event: EventType
+	clickEventHandler: (event: EventType) => void
 	isFullWidth?: boolean
-	testId?: string
+	testID?: string
 }
 
 const EventLabel = (props: EventLabelProps) => {
-	const {event, clickEventHandler, isFullWidth, testId} = props
+	const {event, clickEventHandler, isFullWidth, testID} = props
+
+	const handleClick = () => {
+		clickEventHandler(event)
+	}
+
+	const getFormattedTime = () => {
+		if (!event.allDay) {
+			return dayjs(event.time, 'h:mm').format('h:mma')
+		}
+		return ''
+	}
 
 	return (
 		<div
-			onClick={() => clickEventHandler(event)}
+			onClick={handleClick}
 			style={{
 				background: event.labelColor,
 				color:
@@ -26,12 +37,10 @@ const EventLabel = (props: EventLabelProps) => {
 			className={`px-1 mx-1 rounded mb-1 cursor-pointer items-center ${
 				isFullWidth ? 'w-full' : ''
 			}`}
-			data-testid={testId}
+			data-testid={testID}
 		>
 			<p className='text-sm truncate'>
-				<span data-testid='event-label-time'>
-					{!event.allDay ? dayjs(event.time, 'h:mm').format('h:mma') : ''}
-				</span>{' '}
+				<span data-testid='event-label-time'>{getFormattedTime()}</span>{' '}
 				<span data-testid='event-label-title' className='font-medium'>
 					{event.title}
 				</span>

@@ -10,30 +10,32 @@ jest.mock('dayjs', () => ({
 }))
 
 describe('<EventLabel />', () => {
-	const testId = 'event-label'
+	const testID = 'event-label'
 
 	const props = {
 		event: {
 			id: '1234',
 			title: 'Meeting',
 			description: 'test',
-			date: '12-25-2023',
+			startDate: '2023-12-25',
+			endDate: '2023-12-25',
 			time: '09:30',
 			labelColor: 'blah',
+			allDay: false,
 		},
 		clickEventHandler: jest.fn(),
 		isFullWidth: false,
-		testId,
+		testID,
 	}
 
 	it('should render', () => {
 		render(<EventLabel {...props} />)
 
-		expect(screen.getByTestId(testId)).toBeInTheDocument()
-		expect(screen.getByTestId(`${testId}-title`)).toHaveTextContent(
+		expect(screen.getByTestId(testID)).toBeInTheDocument()
+		expect(screen.getByTestId(`${testID}-title`)).toHaveTextContent(
 			props.event.title,
 		)
-		expect(screen.getByTestId(`${testId}-time`)).toHaveTextContent(
+		expect(screen.getByTestId(`${testID}-time`)).toHaveTextContent(
 			props.event.time,
 		)
 	})
@@ -41,19 +43,19 @@ describe('<EventLabel />', () => {
 	it('should call clickEventHandler when clicking on event label', () => {
 		render(<EventLabel {...props} />)
 
-		screen.getByTestId(testId).click()
+		screen.getByTestId(testID).click()
 		expect(props.clickEventHandler).toHaveBeenCalledWith(props.event)
 	})
 
 	it('should have w-full class when isFullWidth is true', () => {
 		render(<EventLabel {...props} isFullWidth={true} />)
 
-		expect(screen.getByTestId(testId)).toHaveClass('w-full')
+		expect(screen.getByTestId(testID)).toHaveClass('w-full')
 	})
 
 	it('should not have w-full class when isFullWidth is false', () => {
 		render(<EventLabel {...props} isFullWidth={false} />)
 
-		expect(screen.getByTestId(testId)).not.toHaveClass('w-full')
+		expect(screen.getByTestId(testID)).not.toHaveClass('w-full')
 	})
 })
