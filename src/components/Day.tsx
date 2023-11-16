@@ -3,7 +3,7 @@ import {useContext, useEffect, useState} from 'react'
 import {GlobalContext} from '../context'
 import EventLabel from './EventLabel'
 import {EventType} from './EventModal'
-import {getSortedEvents} from '../utils/helpers'
+import {getEventsForDay, getSortedEvents} from '../utils/helpers'
 
 type DayProps = {
 	day: Dayjs
@@ -23,36 +23,8 @@ const Day = (props: DayProps) => {
 		savedEvents,
 	} = useContext(GlobalContext)
 
-	const getDatesInRange = (startDate: string, endDate: string) => {
-		const dates = []
-
-		// convert start and end date strings to dayjs objects
-		let currentDate = dayjs(startDate).startOf('day')
-		const finalDate = dayjs(endDate).startOf('day')
-
-		while (currentDate <= finalDate) {
-			// add current date (in string format) to dates array and increment by 1 day until final date
-			dates.push(currentDate.format('YYYY-MM-DD'))
-			currentDate = currentDate.add(1, 'days')
-		}
-
-		// return array of string dates
-		return dates
-	}
-
 	useEffect(() => {
-		const savedEventsForDay = savedEvents.filter((event) => {
-			// if multi-day event
-			if (event.startDate !== event.endDate) {
-				// get array of dates between start and end date
-				const datesInRange = getDatesInRange(event.startDate, event.endDate)
-				// return true if day is in array of dates
-				return datesInRange.includes(day.format('YYYY-MM-DD'))
-			} else {
-				// single-day event, return true if day is equal to event date
-				return event.startDate === day.format('YYYY-MM-DD')
-			}
-		})
+		const savedEventsForDay = getEventsForDay(savedEvents, day)
 
 		setDayEvents(savedEventsForDay)
 	}, [day, savedEvents])
@@ -114,7 +86,11 @@ const Day = (props: DayProps) => {
 				>
 					{sortedEvents.slice(0, 2).map((event, idx) => (
 						<div key={idx} data-testid='day-event-label'>
-							<EventLabel event={event} clickEventHandler={handleClickEvent} />
+							<EventLabel
+								event={event}
+								clickEventHandler={handleClickEvent}
+								day={day}
+							/>
 						</div>
 					))}
 					{sortedEvents.length > 2 && (

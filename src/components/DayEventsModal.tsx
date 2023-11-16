@@ -2,7 +2,7 @@ import {Fragment, useContext, useRef} from 'react'
 import {GlobalContext} from '../context'
 import {EventType} from './EventModal'
 import {EventLabel} from '.'
-import {getSortedEvents} from '../utils/helpers'
+import {getEventsForDay, getSortedEvents} from '../utils/helpers'
 
 import useClickOutside from '../hooks/useClickOutside'
 
@@ -29,7 +29,8 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 		setIsEventModalOpen(true)
 	}
 
-	const sortedEvents = getSortedEvents(events)
+	const dayEvents = getEventsForDay(events, selectedDay)
+	const sortedEvents = getSortedEvents(dayEvents)
 
 	const ref = useRef<HTMLDivElement>(null)
 	useClickOutside(ref, handleCloseModal)

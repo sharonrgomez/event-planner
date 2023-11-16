@@ -1,15 +1,17 @@
-import dayjs from 'dayjs'
+import dayjs, {Dayjs} from 'dayjs'
 import {EventType} from './EventModal'
+import {getDatesInRange} from '../utils/helpers'
 
 type EventLabelProps = {
 	event: EventType
 	clickEventHandler: (event: EventType) => void
 	isFullWidth?: boolean
 	testID?: string
+	day?: Dayjs
 }
 
 const EventLabel = (props: EventLabelProps) => {
-	const {event, clickEventHandler, isFullWidth, testID} = props
+	const {event, clickEventHandler, isFullWidth, testID, day} = props
 
 	const handleClick = () => {
 		clickEventHandler(event)
@@ -20,6 +22,24 @@ const EventLabel = (props: EventLabelProps) => {
 			return dayjs(event.time, 'h:mm').format('h:mma')
 		}
 		return ''
+	}
+
+	const datesInRange = getDatesInRange(event.startDate, event.endDate)
+
+	const isBetween =
+		datesInRange.includes(day?.format('YYYY-MM-DD')) &&
+		day?.format('YYYY-MM-DD') !== event.startDate &&
+		day?.format('YYYY-MM-DD') !== event.endDate
+
+	const isMultiDayEvent = event.startDate !== event.endDate
+
+	const getEventLabelStyles = () => {
+		if (isBetween) return ''
+		if (isMultiDayEvent && day?.format('YYYY-MM-DD') === event.startDate)
+			return 'rounded-l ml-1'
+		if (isMultiDayEvent && day?.format('YYYY-MM-DD') === event.endDate)
+			return 'rounded-r mr-1'
+		return 'rounded mx-1'
 	}
 
 	return (
@@ -34,7 +54,7 @@ const EventLabel = (props: EventLabelProps) => {
 						? '#fff'
 						: '#4b5563',
 			}}
-			className={`px-1 mx-1 rounded mb-1 cursor-pointer items-center ${
+			className={`px-1 ${getEventLabelStyles()} mb-1 cursor-pointer items-center ${
 				isFullWidth ? 'w-full' : ''
 			}`}
 			data-testid={testID}

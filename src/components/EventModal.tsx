@@ -92,7 +92,6 @@ const EventModal = () => {
 			endDate,
 		}
 
-		console.log('newEvent', newEvent)
 		if (selectedEvent) {
 			const updatedEvents = savedEvents.map((event) => {
 				if (event.id === selectedEvent.id) {
