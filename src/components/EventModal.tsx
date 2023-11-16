@@ -137,7 +137,7 @@ const EventModal = () => {
 			data-testid='event-modal'
 		>
 			<div
-				className='bg-white rounded-lg shadow-2xl max-sm:mx-5 max-sm:w-full sm:max-md:w-1/2 sm:max-2xl:w-1/3'
+				className='bg-white rounded-lg shadow-2xl max-sm:mx-5 max-sm:w-full sm:max-xl:w-1/2 w-1/3'
 				ref={ref}
 			>
 				<form action=''>
