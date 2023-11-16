@@ -51,14 +51,16 @@ export const getMonth = (month = dayjs().month()): dayjs.Dayjs[][] => {
 	let currentMonthCount = 0 - firstWeekdayOfMonth
 	const totalWeeksInMonth = getTotalWeeksInMonth(year, month)
 
-	const daysMatrix = new Array(totalWeeksInMonth).fill([]).map(() => {
-		return new Array(7).fill(null).map(() => {
+	const monthMatrix = new Array(totalWeeksInMonth).fill([]).map(() => {
+		const week = new Array(7).fill(null).map(() => {
 			currentMonthCount++
+
 			return dayjs(new Date(year, month, currentMonthCount))
 		})
+		return week
 	})
 
-	return daysMatrix
+	return monthMatrix
 }
 
 // error messages for firebase auth

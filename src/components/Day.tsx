@@ -7,11 +7,12 @@ import {getEventsForDay, getSortedEvents} from '../utils/helpers'
 
 type DayProps = {
 	day: Dayjs
-	rowIdx: number
+	weekIdx: number
 }
 
 const Day = (props: DayProps) => {
-	const {day, rowIdx} = props
+	const {day, weekIdx} = props
+
 	const [dayEvents, setDayEvents] = useState([])
 
 	const {
@@ -63,7 +64,7 @@ const Day = (props: DayProps) => {
 	return (
 		<>
 			<div className='border border-gray-100 flex flex-col' data-testid='day'>
-				{rowIdx === 0 && (
+				{weekIdx === 0 && (
 					<div
 						className='text-xs border-b text-center row-start-1'
 						data-testid='day-weekday'
