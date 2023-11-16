@@ -3,7 +3,7 @@ import Day from './Day'
 
 import {getTotalWeeksInMonth} from '../utils/helpers'
 
-interface WeekProps {
+type WeekProps = {
 	week: Dayjs[]
 	weekIdx: number
 }
