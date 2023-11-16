@@ -73,6 +73,7 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 								event={event}
 								clickEventHandler={handleClickEvent}
 								isFullWidth
+								showEventTitle
 								testID='day-events-modal-event-label'
 							/>
 						</Fragment>

@@ -8,10 +8,12 @@ type EventLabelProps = {
 	isFullWidth?: boolean
 	testID?: string
 	day?: Dayjs
+	showEventTitle?: boolean
 }
 
 const EventLabel = (props: EventLabelProps) => {
-	const {event, clickEventHandler, isFullWidth, testID, day} = props
+	const {event, clickEventHandler, isFullWidth, testID, day, showEventTitle} =
+		props
 
 	const handleClick = () => {
 		clickEventHandler(event)
@@ -26,10 +28,13 @@ const EventLabel = (props: EventLabelProps) => {
 
 	const datesInRange = getDatesInRange(event.startDate, event.endDate)
 
+	const dayIsStartDate = day?.format('YYYY-MM-DD') === event.startDate
+	const dayIsEndDate = day?.format('YYYY-MM-DD') === event.endDate
+
 	const isBetween =
 		datesInRange.includes(day?.format('YYYY-MM-DD')) &&
-		day?.format('YYYY-MM-DD') !== event.startDate &&
-		day?.format('YYYY-MM-DD') !== event.endDate
+		!dayIsStartDate &&
+		!dayIsEndDate
 
 	const isMultiDayEvent = event.startDate !== event.endDate
 
@@ -41,6 +46,9 @@ const EventLabel = (props: EventLabelProps) => {
 			return 'rounded-r mr-1'
 		return 'rounded mx-1'
 	}
+
+	const shouldDisplayTitle =
+		(day?.day() === 0 && isBetween) || dayIsStartDate || showEventTitle
 
 	return (
 		<div
@@ -54,7 +62,7 @@ const EventLabel = (props: EventLabelProps) => {
 						? '#fff'
 						: '#4b5563',
 			}}
-			className={`px-1 ${getEventLabelStyles()} mb-1 cursor-pointer items-center ${
+			className={`px-1 h-5 ${getEventLabelStyles()} mb-1 cursor-pointer items-center ${
 				isFullWidth ? 'w-full' : ''
 			}`}
 			data-testid={testID}
@@ -62,7 +70,7 @@ const EventLabel = (props: EventLabelProps) => {
 			<p className='text-sm truncate'>
 				<span data-testid='event-label-time'>{getFormattedTime()}</span>{' '}
 				<span data-testid='event-label-title' className='font-medium'>
-					{event.title}
+					{shouldDisplayTitle ? event.title : ' '}
 				</span>
 			</p>
 		</div>
