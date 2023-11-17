@@ -19,7 +19,7 @@ const Week: React.FC<WeekProps> = (props: WeekProps) => {
 	return (
 		<div
 			className='grid grid-cols-7'
-			style={{height: `${totalWeeks === 4 ? '175px' : '150px'}`}}
+			style={{minHeight: `${totalWeeks === 4 ? '175px' : '150px'}`}}
 		>
 			{week.map((day, idx) => (
 				<Day day={day} weekIdx={weekIdx} key={idx} />
