@@ -133,7 +133,7 @@ const EventModal = () => {
 
 	return (
 		<div
-			className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'
+			className='h-screen w-full fixed left-0 top-0 flex justify-center items-center z-20'
 			data-testid='event-modal'
 		>
 			<div

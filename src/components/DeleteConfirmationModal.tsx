@@ -35,7 +35,7 @@ const DeleteConfirmationModal = () => {
 
 	return (
 		<div
-			className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'
+			className='h-screen w-full fixed left-0 top-0 flex justify-center items-center z-20'
 			data-testid='delete-confirmation-modal'
 		>
 			<div className='bg-white rounded-lg shadow-2xl max-sm:mx-5 max-sm:w-full sm:max-md:w-1/2 sm:max-2xl:w-1/3'>

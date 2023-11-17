@@ -5,15 +5,14 @@ import {getDatesInRange} from '../utils/helpers'
 type EventLabelProps = {
 	event: EventType
 	clickEventHandler: (event: EventType) => void
-	isFullWidth?: boolean
 	testID?: string
 	day?: Dayjs
-	showEventTitle?: boolean
+	topValue?: string
+	miniModalView?: boolean
 }
 
 const EventLabel = (props: EventLabelProps) => {
-	const {event, clickEventHandler, isFullWidth, testID, day, showEventTitle} =
-		props
+	const {event, clickEventHandler, testID, day, topValue, miniModalView} = props
 
 	const handleClick = () => {
 		clickEventHandler(event)
@@ -38,17 +37,15 @@ const EventLabel = (props: EventLabelProps) => {
 
 	const isMultiDayEvent = event.startDate !== event.endDate
 
-	const getEventLabelStyles = () => {
+	const getBorderStyles = () => {
 		if (isBetween) return ''
-		if (isMultiDayEvent && day?.format('YYYY-MM-DD') === event.startDate)
-			return 'rounded-l ml-1'
-		if (isMultiDayEvent && day?.format('YYYY-MM-DD') === event.endDate)
-			return 'rounded-r mr-1'
+		if (isMultiDayEvent && dayIsStartDate) return 'rounded-l ml-1'
+		if (isMultiDayEvent && dayIsEndDate) return 'rounded-r mr-1'
 		return 'rounded mx-1'
 	}
 
 	const shouldDisplayTitle =
-		(day?.day() === 0 && isBetween) || dayIsStartDate || showEventTitle
+		(day?.day() === 0 && isBetween) || dayIsStartDate || miniModalView
 
 	return (
 		<div
@@ -61,10 +58,11 @@ const EventLabel = (props: EventLabelProps) => {
 					event.labelColor === '#A2928E'
 						? '#fff'
 						: '#4b5563',
+				top: `${topValue}px`,
 			}}
-			className={`px-1 h-5 ${getEventLabelStyles()} mb-1 cursor-pointer items-center ${
-				isFullWidth ? 'w-full' : ''
-			}`}
+			className={`${
+				!miniModalView ? 'absolute z-10 -left-px -right-px' : 'w-full mb-1'
+			} px-1 h-5 ${getBorderStyles()} cursor-pointer items-center`}
 			data-testid={testID}
 		>
 			<p className='text-sm truncate'>

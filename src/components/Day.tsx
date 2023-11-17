@@ -61,9 +61,39 @@ const Day = (props: DayProps) => {
 
 	const sortedEvents = getSortedEvents(dayEvents)
 
+	const getEventLabelHeight = (idx: number) => {
+		const base = 60
+		const extra = 24
+
+		let result
+
+		if (weekIdx === 0) {
+			if (idx === 0) {
+				result = base
+			} else if (idx >= 2) {
+				result = base + extra * 2
+			} else {
+				result = base + extra
+			}
+		} else {
+			if (idx === 0) {
+				result = base - extra
+			} else if (idx >= 2) {
+				result = base + extra
+			} else {
+				result = base
+			}
+		}
+
+		return result.toString()
+	}
+
 	return (
 		<>
-			<div className='border border-gray-100 flex flex-col' data-testid='day'>
+			<div
+				className='border border-gray-100 flex flex-col relative'
+				data-testid='day'
+			>
 				{weekIdx === 0 && (
 					<div
 						className='text-xs border-b text-center row-start-1'
@@ -91,14 +121,16 @@ const Day = (props: DayProps) => {
 								event={event}
 								clickEventHandler={handleClickEvent}
 								day={day}
+								topValue={getEventLabelHeight(idx)}
 							/>
 						</div>
 					))}
 					{sortedEvents.length > 2 && (
 						<div
 							onClick={(e) => handleClickMoreBtn(e, day)}
-							className='px-1 mx-1 rounded mb-1 hover:bg-gray-100'
+							className='px-1 mx-1 rounded mb-1 hover:bg-gray-100 absolute -left-px -right-px'
 							data-testid='day-more-events-button'
+							style={{top: `${getEventLabelHeight(2)}px`}}
 						>
 							<p className='text-sm text-center text-gray-600 truncate'>
 								{`+${dayEvents.length - 2} more`}

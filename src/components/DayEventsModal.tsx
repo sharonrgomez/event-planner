@@ -37,7 +37,7 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 
 	return (
 		<div
-			className='h-screen w-full fixed left-0 top-0 flex justify-center items-center'
+			className='h-screen w-full fixed left-0 top-0 flex justify-center items-center z-20'
 			data-testid='day-events-modal'
 		>
 			<div
@@ -72,8 +72,7 @@ const DayEventsModal = (props: DayEventsModalProps) => {
 							<EventLabel
 								event={event}
 								clickEventHandler={handleClickEvent}
-								isFullWidth
-								showEventTitle
+								miniModalView
 								testID='day-events-modal-event-label'
 							/>
 						</Fragment>

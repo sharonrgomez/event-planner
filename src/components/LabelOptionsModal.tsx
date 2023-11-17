@@ -46,7 +46,7 @@ const LabelOptionsModal = (props: LabelOptionsModalProps) => {
 
 	return (
 		<div
-			className='bg-white rounded-lg shadow-md p-2 absolute -top-6 -right-3.5 flex flex-wrap flex-row w-44 justify-center'
+			className='bg-white rounded-lg shadow-md p-2 absolute -top-6 -right-3.5 flex flex-wrap flex-row w-44 justify-center z-30'
 			onClick={(e) => {
 				e.stopPropagation()
 			}}
