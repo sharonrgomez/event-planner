@@ -4,6 +4,13 @@ import {EventType} from '../components/EventModal'
 // sorts events
 export const getSortedEvents = (events: EventType[]) => {
 	return events.sort((a, b) => {
+		const aIsMultiDay = a.startDate !== a.endDate
+		const bIsMultiDay = b.startDate !== b.endDate
+
+		if (aIsMultiDay !== bIsMultiDay) {
+			return aIsMultiDay ? -1 : 1
+		}
+
 		const aIsAllDay = a.allDay
 		const bIsAllDay = b.allDay
 

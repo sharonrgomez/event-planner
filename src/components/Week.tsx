@@ -15,7 +15,7 @@ const Week: React.FC<WeekProps> = (props: WeekProps) => {
 		dayjs(week[0]).year(),
 		dayjs(week[0]).month(),
 	)
-	console.log('totalWeeks', totalWeeks)
+
 	return (
 		<div
 			className='grid grid-cols-7'
