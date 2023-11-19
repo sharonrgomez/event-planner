@@ -38,6 +38,7 @@ const EventModal = () => {
 	}
 
 	const [required, setRequired] = useState(false)
+	const [dateValidation, setDateValidation] = useState(false)
 
 	const [title, setTitle] = useState(selectedEvent ? selectedEvent.title : '')
 	const [description, setDescription] = useState(
@@ -71,13 +72,22 @@ const EventModal = () => {
 		if (title) {
 			setRequired(false)
 		}
-	}, [title])
+
+		if (dayjs(startDate).isBefore(dayjs(endDate)) || !allDay) {
+			setDateValidation(false)
+		}
+	}, [title, startDate, endDate, allDay])
 
 	const handleSubmit = async (e) => {
 		e.preventDefault()
 
 		if (!title) {
 			setRequired(true)
+			return
+		}
+
+		if (dayjs(startDate).isAfter(dayjs(endDate))) {
+			setDateValidation(true)
 			return
 		}
 
@@ -221,14 +231,20 @@ const EventModal = () => {
 								/>
 							)}
 						</div>
-						<div className='w-full m-3 pl-3 flex items-center'>
+						{dateValidation && (
+							<p className='text-red-400 text-sm ml-3 w-full'>
+								Start date must be before end date
+							</p>
+						)}
+
+						<div className='w-full m-3 mt-0 pl-3 flex items-center'>
 							<input
 								type='checkbox'
 								checked={allDay}
 								id='allDay'
 								onChange={() => setAllDay((prev) => !prev)}
 							/>
-							<label htmlFor='allDay' className='ml-2 text-gray-600'>
+							<label htmlFor='allDay' className='ml-2 p-2 text-gray-600'>
 								All day
 							</label>
 						</div>
